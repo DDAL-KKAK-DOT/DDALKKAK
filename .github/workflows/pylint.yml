@@ -1,30 +1,27 @@
-name: Lint-dev-be-PR
+# .github/workflows/lint.yml
+name: Lint (dev-be only PR)
 
 on:
   pull_request:
-    branches: [ dev-be ]      # ⬅️ base 브랜치가 dev-be인 PR 한정
+    branches: [ dev-be ]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5        # ① cache 옵션 제거
         with:
           python-version: "3.10"
-          cache: "pip"
 
-      # ───── Flake8 (스타일 게이트) ─────
+      - name: Install flake8 & pylint        # ② 필요한 패키지 수동 설치
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pylint
+
       - name: Run flake8
-        run: |
-          pip install flake8
-          flake8 backend              # 필요한 경로만
+        run: flake8 .
 
-      # ───── Pylint (심층 분석) ─────
       - name: Run pylint
-        run: |
-          pip install pylint
-          pylint --fail-under=8 backend
-
+        run: pylint --fail-under=8 .
