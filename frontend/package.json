@@ -7,15 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky",
-    "lint-staged": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "next lint --fix",
-      "prettier --write"
-    ],
-    "*.{css,md,json,yaml}": "prettier --write"
+    "lint:styled": "stylelint ./src/**/*.styled.ts --fix",
+    "prepare": "cd .. && husky frontend/.husky"
   },
   "dependencies": {
     "next": "15.3.1",
@@ -36,5 +29,12 @@
     "prettier": "^3.5.3",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "next lint --fix",
+      "prettier --write"
+    ],
+    "*.{css,md,json,yaml}": "prettier --write"
   }
 }
