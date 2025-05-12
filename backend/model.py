@@ -1,14 +1,8 @@
-"""
-API에서 사용되는 데이터 모델을 정의하는 모듈입니다.
-"""
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 #데이터 모델 정의
 class Project(BaseModel):
-    """
-    프로젝트 정보를 담는 데이터 모델입니다.
-    """
     name: str
     period: str
     role: str
@@ -17,9 +11,6 @@ class Project(BaseModel):
 
 
 class Career(BaseModel):
-    """
-    경력 정보를 담는 데이터 모델입니다.
-    """
     role: str
     company: str
     period: str
@@ -27,27 +18,18 @@ class Career(BaseModel):
 
 
 class Education(BaseModel):
-    """
-    교육 정보를 담는 데이터 모델입니다.
-    """
     name: str
     period: str
     description: str
 
 
 class Club(BaseModel):
-    """
-    동아리 활동 정보를 담는 데이터 모델입니다.
-    """
     name: str
     period: str
     description: str
 
 
 class ProfileResponse(BaseModel):
-    """
-    전체 프로필 응답을 담는 데이터 모델입니다.
-    """
     profileInfo: str
     shortIntro: str
     skillset: List[str]
@@ -55,3 +37,12 @@ class ProfileResponse(BaseModel):
     career: List[Career]
     education: List[Education]
     clubs: List[Club]
+
+
+class UserProfile(BaseModel):
+    name: str
+    english_name: Optional[str] = None #옵서녈하려면 None
+    education: Optional[List[str]] = []
+    desired_role: Optional[str] = None
+    contact: Optional[str] = None
+    activity_links: List[HttpUrl]
