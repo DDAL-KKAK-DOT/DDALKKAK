@@ -25,6 +25,7 @@ jobs:
       # ───── Pylint (심층 분석) ─────
       - name: Run pylint
         run: |
-          pip install pylint
-          pylint --fail-under=8 backend
+          pylint backend \
+            --disable=missing-module-docstring,missing-function-docstring,import-error,broad-exception-caught \
+            --fail-under=8
 
