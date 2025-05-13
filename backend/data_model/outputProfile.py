@@ -1,6 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
+
 from backend.data_model.career import Career
 from backend.data_model.club import Club
 from backend.data_model.education import Education

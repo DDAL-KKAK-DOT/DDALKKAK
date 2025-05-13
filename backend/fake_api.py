@@ -1,6 +1,7 @@
 from typing import List
 from fastapi import FastAPI, HTTPException
-
+from cors import add_cors_middleware
+from sample_data import profile_data
 from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
 from backend.data_model.career import Career
@@ -8,9 +9,6 @@ from backend.data_model.club import Club
 from backend.data_model.education import Education
 from backend.data_model.project import Project
 
-from cors import add_cors_middleware
-
-from sample_data import profile_data
 
 app = FastAPI(
     title= "ddalkkak API",
@@ -71,11 +69,12 @@ async def submit_profile(profile: InputProfile):
 async def get_profile_section(section: str):
     if section in profile_data:
         return {section: profile_data[section]}
-    else:
-        raise HTTPException(
-            status_code=404,
-            detail=f"섹션 '{section}'을(를) 찾을 수 없습니다. 유효한 섹션: {', '.join(profile_data.keys())}"
-        )
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"섹션 '{section}'을(를) 찾을 수 없습니다. 유효한 섹션: {', '.join(profile_data.keys())}"
+    )
+
 
 if __name__ == "__main__":
     import uvicorn
