@@ -18,11 +18,6 @@ if not GEMINI_API_KEY:
 # Gemini 클라이언트 초기화
 genai_client = genai.Client(api_key=GEMINI_API_KEY)
 
-# GitHub API 토큰 (선택사항)
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-headers = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
-
-
 def build_resume_prompt(profile: dict, urls: list[str]) -> str:
     sections = []
     print(urls)
