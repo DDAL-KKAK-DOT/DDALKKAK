@@ -1,7 +1,15 @@
 from typing import List
 from fastapi import FastAPI, HTTPException
+
+from backend.data_model.inputProfile import InputProfile
+from backend.data_model.outputProfile import OutputProfile
+from backend.data_model.career import Career
+from backend.data_model.club import Club
+from backend.data_model.education import Education
+from backend.data_model.project import Project
+
 from cors import add_cors_middleware
-from model import ProfileResponse, Project, Career, Education, Club, UserProfile
+
 from sample_data import profile_data
 
 app = FastAPI(
@@ -15,10 +23,10 @@ app = add_cors_middleware(app)
 
 @app.get("/")
 async def root():
-    return {"message": "프로필 API에 오신 것을 환영합니다"}
+    return {"message": "welcome to DDALKKAK API"}
 
 
-@app.get("/api/profile", response_model=ProfileResponse, tags=["프로필"])
+@app.get("/api/profile", response_model=OutputProfile, tags=["프로필"])
 async def get_profile():
     return profile_data
 
@@ -48,8 +56,8 @@ async def get_clubs():
     return profile_data["clubs"]
 
 
-@app.post("/submit-profile")
-async def submit_profile(profile: UserProfile):
+@app.post("/input_profile")
+async def submit_profile(profile: InputProfile):
     if not profile.activity_links:
         raise HTTPException(status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다.")
 
