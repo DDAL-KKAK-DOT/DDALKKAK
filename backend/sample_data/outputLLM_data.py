@@ -1,4 +1,4 @@
-# 샘플 데이터 (실제로는 데이터베이스에서 가져올 것)
+# LLM output sample data (실제로는 LLM에서 가져올 것)
 profile_data = {
     "profileInfo": "홍길동 23세 백엔드",
     "shortIntro": "책임감 있는 개발자입니다!",

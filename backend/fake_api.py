@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import FastAPI, HTTPException
 from cors import add_cors_middleware
-from sample_data import profile_data
+from backend.sample_data.outputLLM_data import profile_data
 from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
 from backend.data_model.career import Career
