@@ -174,21 +174,6 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 """
 
 
-def parse_llm_output(text: str) -> dict:
-    parts = text.split("EXPERIENCES:")
-    summary = parts[0].replace("SUMMARY:", "").strip() if parts else ""
-    experiences = []
-    if len(parts) > 1:
-        for line in parts[1].strip().splitlines():
-            if ":" in line and "." in line:
-                num_title, desc = line.split(":", 1)
-                title = num_title.split(". ", 1)[-1].strip()
-                experiences.append({"title": title, "description": desc.strip()})
-            elif line.strip():
-                experiences.append({"title": "", "description": line.strip()})
-    return {"summary": summary, "experiences": experiences}
-
-
 def find_wkhtmltopdf() -> str:
     path = shutil.which("wkhtmltopdf")
     if path:
