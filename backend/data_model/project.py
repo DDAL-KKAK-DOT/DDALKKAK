@@ -7,4 +7,4 @@ class Project(BaseModel):
     period: str
     role: str
     description: str
-    honor: Optional[str] = ""
+    honor: Optional[str] = None
