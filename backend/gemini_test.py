@@ -174,18 +174,6 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 """
 
 
-def find_wkhtmltopdf() -> str:
-    path = shutil.which("wkhtmltopdf")
-    if path:
-        return path
-    brew = "/usr/local/bin/wkhtmltopdf"
-    if os.path.isfile(brew):
-        return brew
-    raise IOError(
-        "`wkhtmltopdf` 실행 파일을 찾을 수 없습니다. 설치하거나 경로를 지정하세요."
-    )
-
-
 def main():
     profile = {
         "name": "김예찬",
