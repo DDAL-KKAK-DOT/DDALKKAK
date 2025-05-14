@@ -1,64 +1,74 @@
-# utils_fetch.py
 import functools
 import requests
-
 from bs4 import BeautifulSoup
-from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 from readability import Document
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+import time
 
 UA = {"User-Agent": "Mozilla/5.0"}
+MAX_CHARS = 5000  # 최대 5000자 (≈1500 토큰)
+STATIC_THRESHOLD = 200  # 정적 파싱으로 충분한 텍스트 길이 기준
 
-MAX_CHARS = 5000  # 이 정도면 1500토큰 ≈ LLM에 넣기 안전
-TIMEOUT = 20000  # ms (Playwright)
 
-
-# ─────────────────── 캐시 ───────────────────
 @functools.lru_cache(maxsize=256)
 def fetch_page_text(url: str) -> str:
+    """
+    URL의 본문 텍스트를 가져옵니다.
+    - 정적 파싱으로 200자 이상이면 반환
+    - 그렇지 않으면 Selenium 동적 렌더링으로 본문 전체 추출
+    """
     txt = _static_fetch(url)
-    if len(txt) >= 200:  # 200자 넘으면 본문 확보 성공
+    if len(txt) >= STATIC_THRESHOLD:
         return txt[:MAX_CHARS]
     return _dynamic_fetch(url)[:MAX_CHARS]
 
 
-# ─────────────────── 1) requests + Readability ───────────────────
 def _static_fetch(url: str) -> str:
-    try:
-        res = requests.get(url, timeout=8, headers=UA)
-        res.raise_for_status()
-        doc = Document(res.text)
-        cleaned_html = doc.summary()
-        return BeautifulSoup(cleaned_html, "html.parser").get_text(separator=" ", strip=True)
-    except Exception:
-        return ""
+    """
+    requests + readability로 주요 콘텐츠만 요약 추출
+    """
+    res = requests.get(url, timeout=8, headers=UA)
+    doc = Document(res.text)
+    cleaned_html = doc.summary()
+    return BeautifulSoup(cleaned_html, "html.parser").get_text(strip=True)
 
 
-# ─────────────────── 2) Playwright 렌더링 ───────────────────
 def _dynamic_fetch(url: str) -> str:
+    """
+    Selenium을 사용해 JS 렌더링 후 전체 <body> 텍스트를 수집
+    """
+    # Chrome 옵션 설정
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument(f'user-agent={UA["User-Agent"]}')
+
+    # ChromeDriver 자동 설치
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+
     try:
-        with sync_playwright() as pw:
-            br = pw.chromium.launch(headless=True)
-            pg = br.new_page()
-            pg.goto(url, wait_until="domcontentloaded", timeout=TIMEOUT)
+        driver.get(url)
+        time.sleep(2)  # 초기 로딩 대기
 
-            # Notion 같은 lazy 페이지: 끝까지 스크롤
-            if "notion.site" in url:
-                pg.evaluate("""
-                    () => new Promise(r=>{
-                        let p=0; const s=()=>{window.scrollBy(0,1000);
-                        if(document.documentElement.scrollTop!==p){p=document.documentElement.scrollTop;requestAnimationFrame(s);}
-                        else r();}; s();})
-                """)
+        # 필요 시 페이지 끝까지 스크롤
+        last_height = driver.execute_script("return document.body.scrollHeight")
+        while True:
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
+            new_height = driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
 
-            # 가장 긴 텍스트를 뽑기 위한 셀렉터 여러 개
-            sel = ["div.notion-text", "article", "main", ".markdown-body", "body"]
-            blocks = []
-            for css in sel:
-                try:
-                    blocks.extend(pg.locator(css).all_inner_texts())
-                except PWTimeout:
-                    pass
-            br.close()
-        return "\n".join(blocks).strip()
-    except Exception:
-        return ""
+        # body 태그 내 모든 텍스트 수집
+        body = driver.find_element("tag name", "body")
+        text = body.text
+    finally:
+        driver.quit()
+
+    return text.strip()
