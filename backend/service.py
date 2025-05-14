@@ -10,6 +10,7 @@ from backend.data_model.outputProfile import OutputProfile
 from backend.data_model.project import Project
 from backend.sample_data.outputLLM_data import profile_data
 from cors import add_cors_middleware
+from gemini_test import generate_profile
 
 app = FastAPI(
     title="ddalkkak API", description="Portfolio result text API", version="1.0.0"
@@ -22,6 +23,11 @@ app = add_cors_middleware(app)
 @app.get("/")
 async def root():
     return {"message": "welcome to DDALKKAK API"}
+
+
+@app.get("/api/resume", response_model=OutputProfile)
+async def get_resume():
+    return generate_profile()
 
 
 @app.get("/api/profile", response_model=OutputProfile, tags=["프로필"])
