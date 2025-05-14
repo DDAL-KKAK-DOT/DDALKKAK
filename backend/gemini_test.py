@@ -1,10 +1,10 @@
 import os
-import shutil
-
+import json
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from backend.data_model.outputProfile import OutputProfile
 from utils_fetch import fetch_page_text
 
 # .env 파일 로드
@@ -174,7 +174,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 """
 
 
-def main():
+def generate_profile() -> OutputProfile:
     profile = {
         "name": "김예찬",
         "email": "yechan@example.com",
@@ -189,27 +189,17 @@ def main():
         "https://fossil-drifter-7be.notion.site/Yechan-Kim-1111058952168023a472d3e26729b4b7?pvs=4",
         "https://www.youtube.com/watch?v=tO3iGK2m4K8",
     ]
-    # 1) tools 정의
-    tools = [types.Tool(google_search=types.GoogleSearch())]
-
-    # 2) config 객체 생성
-    gen_cfg = types.GenerateContentConfig(
-        tools=tools,
-        response_mime_type="text/plain",
-    )
     prompt = build_resume_prompt(profile, links)
-
-    # 3) 호출
+    cfg = types.GenerateContentConfig(
+        response_mime_type="application/json",
+    )
+    # 호출
     resp = genai_client.models.generate_content(
         model="models/gemini-2.5-flash-preview-04-17",
         contents=prompt,  # ← str 또는 types.Content list
-        config=gen_cfg,  # ← 여기!
+        config=cfg,
     )
-
-    out = resp.text
-
-    print(out)
-
-
-if __name__ == "__main__":
-    main()
+    # resp.text가 JSON 문자열이라면
+    raw = json.loads(resp.text)
+    # Pydantic 모델로 검증·변환
+    return OutputProfile(**raw)
