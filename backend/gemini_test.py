@@ -1,8 +1,10 @@
 import os
 import shutil
+
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+
 from utils_fetch import fetch_page_text
 
 # .env 파일 로드
@@ -17,6 +19,7 @@ if not GEMINI_API_KEY:
 
 # Gemini 클라이언트 초기화
 genai_client = genai.Client(api_key=GEMINI_API_KEY)
+
 
 def build_resume_prompt(profile: dict, urls: list[str]) -> str:
     sections = []

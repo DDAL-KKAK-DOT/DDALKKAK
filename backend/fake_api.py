@@ -1,23 +1,23 @@
 from typing import List
+
 from fastapi import FastAPI, HTTPException
-from cors import add_cors_middleware
-from backend.sample_data.outputLLM_data import profile_data
-from backend.data_model.inputProfile import InputProfile
-from backend.data_model.outputProfile import OutputProfile
+
 from backend.data_model.career import Career
 from backend.data_model.club import Club
 from backend.data_model.education import Education
+from backend.data_model.inputProfile import InputProfile
+from backend.data_model.outputProfile import OutputProfile
 from backend.data_model.project import Project
-
+from backend.sample_data.outputLLM_data import profile_data
+from cors import add_cors_middleware
 
 app = FastAPI(
-    title= "ddalkkak API",
-    description= "Portfolio result text API",
-    version= "1.0.0"
+    title="ddalkkak API", description="Portfolio result text API", version="1.0.0"
 )
 
 # CORS 미들웨어 추가
 app = add_cors_middleware(app)
+
 
 @app.get("/")
 async def root():
@@ -57,14 +57,14 @@ async def get_clubs():
 @app.post("/input_profile")
 async def submit_profile(profile: InputProfile):
     if not profile.activity_links:
-        raise HTTPException(status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다.")
+        raise HTTPException(
+            status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다."
+        )
 
-    return {
-        "message": "사용자 프로필이 성공적으로 저장되었습니다.",
-        "data": profile
-    }
+    return {"message": "사용자 프로필이 성공적으로 저장되었습니다.", "data": profile}
 
-#에러 헨들링
+
+# 에러 헨들링
 @app.get("/api/profile/{section}")
 async def get_profile_section(section: str):
     if section in profile_data:
@@ -72,10 +72,11 @@ async def get_profile_section(section: str):
 
     raise HTTPException(
         status_code=404,
-        detail=f"섹션 '{section}'을(를) 찾을 수 없습니다. 유효한 섹션: {', '.join(profile_data.keys())}"
+        detail=f"섹션 '{section}'을(를) 찾을 수 없습니다. 유효한 섹션: {', '.join(profile_data.keys())}",
     )
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
