@@ -11,8 +11,8 @@ from backend.data_model.project import Project
 class OutputProfile(BaseModel):
     profileInfo: str
     shortIntro: str
-    skillset: List[str]
+    skills: List[str]
     projects: List[Project]
-    career: List[Career]
-    education: List[Education]
+    careers: List[Career]
+    educations: List[Education]
     clubs: List[Club]

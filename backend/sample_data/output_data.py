@@ -2,7 +2,7 @@
 profile_data = {
     "profileInfo": "홍길동 23세 백엔드",
     "shortIntro": "책임감 있는 개발자입니다!",
-    "skillset": [
+    "skills": [
         "java 상",
         "C++ 중",
         "Python 상"
@@ -23,7 +23,7 @@ profile_data = {
             "honor": ""
         }
     ],
-    "career": [
+    "careers": [
         {
             "role": "직무 이름",
             "company": "기업명",
@@ -37,7 +37,7 @@ profile_data = {
             "description": "업무 내용에 대한 설명을 입력하세요."
         }
     ],
-    "education": [
+    "educations": [
         {
             "name": "교육 이름",
             "period": "2017.03 - 2017.08",
