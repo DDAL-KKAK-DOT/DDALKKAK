@@ -20,18 +20,6 @@ export default function Header() {
 
         <nav className="flex items-center gap-6">
           <Link
-            href="/templates"
-            className="body-m-medium text-gray-600 hover:text-gray-900"
-          >
-            템플릿
-          </Link>
-          <Link
-            href="/pricing"
-            className="body-m-medium text-gray-600 hover:text-gray-900"
-          >
-            요금제
-          </Link>
-          <Link
             href="/login"
             className="body-m-medium text-gray-600 hover:text-gray-900"
           >
