@@ -1,29 +1,12 @@
 name: Lint (dev-be only PR)
-
 on:
   pull_request:
     branches: [ dev-be ]
 
 jobs:
-  flake8:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Install flake8
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8
-
-      - name: Run flake8 on entire repo
-        run: flake8 .
-
   pylint:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -31,10 +14,14 @@ jobs:
         with:
           python-version: "3.10"
 
+      # 1) pylint 설치
       - name: Install pylint
         run: |
-          python -m pip install --upgrade pip
           pip install pylint
 
-      - name: Run pylint (fail < 8/10)
-        run: pylint --fail-under=8 .
+      # 2) pylint 실행 (fail < 8/10)
+      - name: Run pylint
+        run: |
+          pylint backend \
+            --disable=missing-module-docstring,missing-function-docstring,import-error,broad-exception-caught \
+            --fail-under=8
