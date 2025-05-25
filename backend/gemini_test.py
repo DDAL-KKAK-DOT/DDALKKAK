@@ -3,7 +3,7 @@ import json
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-
+from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
 from utils_fetch import fetch_page_text
 
@@ -19,6 +19,26 @@ if not GEMINI_API_KEY:
 
 # Gemini 클라이언트 초기화
 genai_client = genai.Client(api_key=GEMINI_API_KEY)
+
+def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
+    profile_dict = {
+        "name": profile.name,
+        "email": profile.contact or "",  # contact 필드를 이메일로 사용
+        "phone": profile.contact or "",
+        "education": profile.education[0] if profile.education else "",
+        "skills": [],  # skill 정보는 InputProfile에 없음
+    }
+    links = [str(link) for link in profile.activity_links]
+    prompt = build_resume_prompt(profile_dict, links)
+
+    cfg = types.GenerateContentConfig(response_mime_type="application/json")
+    resp = genai_client.models.generate_content(
+        model="models/gemini-2.5-flash-preview-04-17",
+        contents=prompt,
+        config=cfg,
+    )
+    raw = json.loads(resp.text)
+    return OutputProfile(**raw)
 
 
 def build_resume_prompt(profile: dict, urls: list[str]) -> str:

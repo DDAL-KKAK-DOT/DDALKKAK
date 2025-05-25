@@ -3,7 +3,8 @@ import time
 
 import requests
 from bs4 import BeautifulSoup
-from readability import Document
+#from readability import Document
+from readability.readability import Document
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service

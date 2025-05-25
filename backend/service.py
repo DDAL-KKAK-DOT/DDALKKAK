@@ -11,6 +11,7 @@ from backend.data_model.project import Project
 from backend.sample_data.outputLLM_data import profile_data
 from cors import add_cors_middleware
 from gemini_test import generate_profile
+from gemini_test import generate_profile_from_input
 
 app = FastAPI(
     title="ddalkkak API", description="Portfolio result text API", version="1.0.0"
@@ -69,6 +70,12 @@ async def submit_profile(profile: InputProfile):
 
     return {"message": "사용자 프로필이 성공적으로 저장되었습니다.", "data": profile}
 
+
+@app.post("/generate-profile", response_model=OutputProfile)
+async def generate_profile_endpoint(profile: InputProfile):
+    if not profile.activity_links:
+        raise HTTPException(status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다.")
+    return generate_profile_from_input(profile)
 
 # 에러 헨들링
 @app.get("/api/profile/{section}")
