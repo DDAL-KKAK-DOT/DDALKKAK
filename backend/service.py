@@ -60,17 +60,6 @@ async def get_education():
 async def get_clubs():
     return profile_data["clubs"]
 
-
-@app.post("/input_profile")
-async def submit_profile(profile: InputProfile):
-    if not profile.activity_links:
-        raise HTTPException(
-            status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다."
-        )
-
-    return {"message": "사용자 프로필이 성공적으로 저장되었습니다.", "data": profile}
-
-
 @app.post("/generate-profile", response_model=OutputProfile)
 async def generate_profile_endpoint(profile: InputProfile):
     if not profile.activity_links:
