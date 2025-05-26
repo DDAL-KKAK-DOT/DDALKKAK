@@ -1,6 +1,5 @@
 #!/bin/sh
-
-rm -rf output
+cd ../
 mkdir output
-
-rsync -av --progress ./ ./output --exclude output --exclude .git --exclude node_modules
+cp -R ./DDALKKAK/* ./output
+cp -R ./output ./DDALKKAK/
