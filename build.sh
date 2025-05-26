@@ -1,4 +1,6 @@
 #!/bin/sh
+
 rm -rf output
 mkdir output
-cp -R ./* ./output/
+
+rsync -av --progress ./ ./output --exclude output --exclude .git --exclude node_modules
