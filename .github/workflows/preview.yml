@@ -20,15 +20,14 @@ jobs:
         run: npm install --global vercel@latest && npm install --global pnpm
 
       - name: Pull Vercel Environment (preview)
-        run: cd frontend && vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: cd frontend && vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
         id: deploy
         run: |
-          cd frontend
           vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} > vercel-output.txt
           echo "preview_url=$(cat vercel-output.txt)" >> $GITHUB_OUTPUT
 
@@ -36,7 +35,7 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            ✅ **Vercel Preview**
+            ✅ **Vercel Preview**  
             🔗 ${{ steps.deploy.outputs.preview_url }}
 
 permissions:
