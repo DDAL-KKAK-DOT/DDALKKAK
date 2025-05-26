@@ -1,13 +1,12 @@
 import functools
-import time
 import requests
 from bs4 import BeautifulSoup
-#from readability import Document
-from readability.readability import Document
+from readability import Document
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+import time
 
 UA = {"User-Agent": "Mozilla/5.0"}
 MAX_CHARS = 5000  # 최대 5000자 (≈1500 토큰)

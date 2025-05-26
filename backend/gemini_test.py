@@ -1,10 +1,8 @@
 import os
-import json
+import shutil
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from backend.data_model.inputProfile import InputProfile
-from backend.data_model.outputProfile import OutputProfile
 from utils_fetch import fetch_page_text
 
 # .env 파일 로드
@@ -19,27 +17,6 @@ if not GEMINI_API_KEY:
 
 # Gemini 클라이언트 초기화
 genai_client = genai.Client(api_key=GEMINI_API_KEY)
-
-def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
-    profile_dict = {
-        "name": profile.name,
-        "email": profile.contact or "",  # contact 필드를 이메일로 사용
-        "phone": profile.contact or "",
-        "education": profile.education[0] if profile.education else "",
-        "skills": [],  # skill 정보는 InputProfile에 없음
-    }
-    links = [str(link) for link in profile.activity_links]
-    prompt = build_resume_prompt(profile_dict, links)
-
-    cfg = types.GenerateContentConfig(response_mime_type="application/json")
-    resp = genai_client.models.generate_content(
-        model="models/gemini-2.5-flash-preview-04-17",
-        contents=prompt,
-        config=cfg,
-    )
-    raw = json.loads(resp.text)
-    return OutputProfile(**raw)
-
 
 def build_resume_prompt(profile: dict, urls: list[str]) -> str:
     sections = []
@@ -194,7 +171,34 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 """
 
 
-def generate_profile() -> OutputProfile:
+def parse_llm_output(text: str) -> dict:
+    parts = text.split("EXPERIENCES:")
+    summary = parts[0].replace("SUMMARY:", "").strip() if parts else ""
+    experiences = []
+    if len(parts) > 1:
+        for line in parts[1].strip().splitlines():
+            if ":" in line and "." in line:
+                num_title, desc = line.split(":", 1)
+                title = num_title.split(". ", 1)[-1].strip()
+                experiences.append({"title": title, "description": desc.strip()})
+            elif line.strip():
+                experiences.append({"title": "", "description": line.strip()})
+    return {"summary": summary, "experiences": experiences}
+
+
+def find_wkhtmltopdf() -> str:
+    path = shutil.which("wkhtmltopdf")
+    if path:
+        return path
+    brew = "/usr/local/bin/wkhtmltopdf"
+    if os.path.isfile(brew):
+        return brew
+    raise IOError(
+        "`wkhtmltopdf` 실행 파일을 찾을 수 없습니다. 설치하거나 경로를 지정하세요."
+    )
+
+
+def main():
     profile = {
         "name": "김예찬",
         "email": "yechan@example.com",
@@ -209,17 +213,27 @@ def generate_profile() -> OutputProfile:
         "https://fossil-drifter-7be.notion.site/Yechan-Kim-1111058952168023a472d3e26729b4b7?pvs=4",
         "https://www.youtube.com/watch?v=tO3iGK2m4K8",
     ]
-    prompt = build_resume_prompt(profile, links)
-    cfg = types.GenerateContentConfig(
-        response_mime_type="application/json",
+    # 1) tools 정의
+    tools = [types.Tool(google_search=types.GoogleSearch())]
+
+    # 2) config 객체 생성
+    gen_cfg = types.GenerateContentConfig(
+        tools=tools,
+        response_mime_type="text/plain",
     )
-    # 호출
+    prompt = build_resume_prompt(profile, links)
+
+    # 3) 호출
     resp = genai_client.models.generate_content(
         model="models/gemini-2.5-flash-preview-04-17",
         contents=prompt,  # ← str 또는 types.Content list
-        config=cfg,
+        config=gen_cfg,  # ← 여기!
     )
-    # resp.text가 JSON 문자열이라면
-    raw = json.loads(resp.text)
-    # Pydantic 모델로 검증·변환
-    return OutputProfile(**raw)
+
+    out = resp.text
+
+    print(out)
+
+
+if __name__ == "__main__":
+    main()
