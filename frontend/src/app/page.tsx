@@ -3,7 +3,7 @@ import FeaturesSection from "./main/components/FeaturesSection/FeaturesSection";
 import DefaultLayout from "@/components/layout/DefaultLayout";
 import Footer from "@/components/Footer/Footer";
 
-export default function Home() {
+export default function Main() {
   return (
     <DefaultLayout>
       <main className="space-y-24 pb-24">
