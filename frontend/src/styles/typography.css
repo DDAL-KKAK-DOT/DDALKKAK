@@ -33,6 +33,11 @@
     font-size: var(--font-size-24);
     line-height: var(--line-height-32);
   }
+  .title-m-bold {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-20);
+    line-height: var(--line-height-28);
+  }
   .title-m-semibold {
     font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-20);
@@ -50,6 +55,11 @@
   }
   .body-m-semibold {
     font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-24);
+  }
+  .body-m-medium {
+    font-weight: var(--font-weight-medium);
     font-size: var(--font-size-16);
     line-height: var(--line-height-24);
   }
