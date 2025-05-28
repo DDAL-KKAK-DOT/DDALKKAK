@@ -23,18 +23,3 @@ export default function FeatureCard({ title, description }: FeatureCardProps) {
     </div>
   );
 }
-
-function getDescription(title: string): string {
-  switch (title) {
-    case "AI 기반 이력서 작성":
-      return "AI가 분석한 맞춤형 이력서 작성 가이드";
-    case "다양한 템플릿":
-      return "깔끔한 디자인의 다양한 템플릿";
-    case "간단한 편집":
-      return "간단한 편집으로 완성도 향상";
-    case "PDF 다운로드":
-      return "생성한 이력서를 PDF로 다운로드";
-    default:
-      return "";
-  }
-}
