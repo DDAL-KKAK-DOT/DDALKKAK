@@ -39,9 +39,9 @@ async def get_projects():
     return profile_data["projects"]
 
 
-@app.get("/api/profile/skillset", response_model=List[str], tags=["프로필"])
-async def get_skillset():
-    return profile_data["skillset"]
+@app.get("/api/profile/skills", response_model=List[str], tags=["프로필"])
+async def get_skills():
+    return profile_data["skills"]
 
 
 @app.get("/api/profile/career", response_model=List[Career], tags=["프로필"])
