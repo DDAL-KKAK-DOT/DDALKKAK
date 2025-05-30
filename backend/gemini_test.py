@@ -38,6 +38,14 @@ def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
         config=cfg,
     )
     raw = json.loads(resp.text)
+
+    # 🛠 누락된 필드가 있으면 기본값 설정
+    raw.setdefault("skills", [])
+    raw.setdefault("projects", [])
+    raw.setdefault("careers", [])
+    raw.setdefault("educations", [])
+    raw.setdefault("clubs", [])
+
     return OutputProfile(**raw)
 
 
@@ -70,7 +78,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 
 ### 작성 규칙
 1. **각 필드**는 다음과 같이 **풍부한 세부 내용**을 포함해야 합니다.  
-   - `skillset`: 기술명 뒤에 ‘초급/중급/상급’ 수준 + 1줄 설명을 덧붙이세요.  
+   - `skills`: 기술명 뒤에 ‘초급/중급/상급’ 수준 + 1줄 설명을 덧붙이세요.  
    - `projects[n].description`: 문제 상황 → 해결 과정 → 성과(숫자·지표) 순으로 3~5문장 작성.  
    - `projects[n].honor`: 정량 성과(예: *쿼리 속도 30% 개선*, *DAU 10 → 2 만 명*).  
    - `career[n].description`: (기술·팀 규모·업무 흐름·리더십 사례)를 4문장 이상으로 상세히.  
@@ -82,7 +90,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 {{
   "profileInfo": "<이름/나이/직무 요약>",
   "shortIntro": "<간단 자기 소개>",
-  "skillset": ["<기술1 수준>", "..."],
+  "skills": ["<기술1 수준>", "..."],
   "projects": [
     {{
       "name": "<프로젝트명>",
@@ -124,7 +132,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 {{
   "profileInfo": "홍길동 23세 백엔드",
   "shortIntro": "책임감 있는 개발자입니다!",
-  "skillset": [
+  "skills": [
     "java 상",
     "C++ 중",
     "Python 상"
@@ -200,9 +208,9 @@ def generate_profile() -> OutputProfile:
         "email": "yechan@example.com",
         "phone": "010-1234-5678",
         "education": "중앙대학교 소프트웨어공학과",
-        "skills": ["Python", "FastAPI", "Flutter"],
+        "skills": ["Python ", "FastAPI", "Flutter"],
     }
-    links = [
+    links  = [
         "https://github.com/ii2001",
         "https://fossil-drifter-7be.notion.site/?pvs=4",
         "https://fossil-drifter-7be.notion.site/PengCook-7de0b01f342d442080f677c309796b5c?pvs=4",
