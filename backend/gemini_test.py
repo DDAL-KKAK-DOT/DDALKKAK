@@ -42,8 +42,8 @@ def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
     # 🛠 누락된 필드가 있으면 기본값 설정
     raw.setdefault("skills", [])
     raw.setdefault("projects", [])
-    raw.setdefault("careers", [])
-    raw.setdefault("educations", [])
+    raw.setdefault("career", [])
+    raw.setdefault("education", [])
     raw.setdefault("clubs", [])
 
     return OutputProfile(**raw)
