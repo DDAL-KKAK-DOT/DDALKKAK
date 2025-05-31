@@ -25,7 +25,7 @@ def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
         "name": profile.name,
         "email": profile.contact or "",  # contact 필드를 이메일로 사용
         "phone": profile.contact or "",
-        "education": profile.education[0] if profile.education else "",
+        "education": profile.educations[0] if profile.educations else "",
         "skills": [],  # skill 정보는 InputProfile에 없음
     }
     links = [str(link) for link in profile.activity_links]

@@ -13,6 +13,6 @@ class OutputProfile(BaseModel):
     shortIntro: str
     skills: List[str]
     projects: List[Project]
-    career: List[Career]
-    education: List[Education]
+    careers: List[Career]
+    educations: List[Education]
     clubs: List[Club]
