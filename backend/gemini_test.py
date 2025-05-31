@@ -25,7 +25,7 @@ def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
         "name": profile.name,
         "email": profile.contact or "",  # contact 필드를 이메일로 사용
         "phone": profile.contact or "",
-        "education": profile.educations[0] if profile.educations else "",
+        "educations": profile.educations[0] if profile.educations else "",
         "skills": [],  # skill 정보는 InputProfile에 없음
     }
     links = [str(link) for link in profile.activity_links]
@@ -42,8 +42,8 @@ def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
     # 🛠 누락된 필드가 있으면 기본값 설정
     raw.setdefault("skills", [])
     raw.setdefault("projects", [])
-    raw.setdefault("career", [])
-    raw.setdefault("education", [])
+    raw.setdefault("careers", [])
+    raw.setdefault("educations", [])
     raw.setdefault("clubs", [])
 
     return OutputProfile(**raw)
@@ -69,7 +69,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 - 이름: {profile['name']}
 - 이메일: {profile['email']}
 - 연락처: {profile['phone']}
-- 학력: {profile['education']}
+- 학력: {profile['educations']}
 - 기술 스택: {', '.join(profile['skills'])}
 
 링크 발췌:
@@ -81,8 +81,8 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
    - `skills`: 기술명 뒤에 ‘초급/중급/상급’ 수준 + 1줄 설명을 덧붙이세요.  
    - `projects[n].description`: 문제 상황 → 해결 과정 → 성과(숫자·지표) 순으로 3~5문장 작성.  
    - `projects[n].honor`: 정량 성과(예: *쿼리 속도 30% 개선*, *DAU 10 → 2 만 명*).  
-   - `career[n].description`: (기술·팀 규모·업무 흐름·리더십 사례)를 4문장 이상으로 상세히.  
-   - `education`, `clubs`도 구체적 경험·배운 점 포함(2문장↑).  
+   - `careers[n].description`: (기술·팀 규모·업무 흐름·리더십 사례)를 4문장 이상으로 상세히.  
+   - `educations`, `clubs`도 구체적 경험·배운 점 포함(2문장↑).  
 2. 한국어로 작성하고, 키 이름·중첩 구조 변경 금지.
 3. 마크다운·코드펜스 없이 **순수 JSON만 출력**.
 
@@ -101,7 +101,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
     }},
     …
   ],
-  "career": [
+  "careers": [
     {{
       "role": "<직무명>",
       "company": "<회사명>",
@@ -110,7 +110,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
     }},
     …
   ],
-  "education": [
+  "educations": [
     {{
       "name": "<교육명>",
       "period": "<기간>",
@@ -153,7 +153,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
       "honor": ""
     }}
   ],
-  "career": [
+  "careers": [
     {{
       "role": "직무 이름",
       "company": "기업명",
@@ -167,7 +167,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
       "description": "업무 내용에 대한 설명을 입력하세요."
     }}
   ],
-  "education": [
+  "educations": [
     {{
       "name": "교육 이름",
       "period": "2017.03 - 2017.08",
