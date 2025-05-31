@@ -210,7 +210,7 @@ def generate_profile() -> OutputProfile:
         "education": "중앙대학교 소프트웨어공학과",
         "skills": ["Python ", "FastAPI", "Flutter"],
     }
-    links  = [
+    links = [
         "https://github.com/ii2001",
         "https://fossil-drifter-7be.notion.site/?pvs=4",
         "https://fossil-drifter-7be.notion.site/PengCook-7de0b01f342d442080f677c309796b5c?pvs=4",
