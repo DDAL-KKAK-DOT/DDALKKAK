@@ -58,7 +58,7 @@ async def get_education():
 async def get_clubs():
     return profile_data["clubs"]
 
-@app.post("/api/generate-profile", response_model=OutputProfile)
+@app.post("/api/profile", response_model=OutputProfile)
 async def generate_profile_endpoint(profile: InputProfile):
     if not profile.activity_links:
         raise HTTPException(status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다.")
