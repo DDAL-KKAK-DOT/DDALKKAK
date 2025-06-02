@@ -6,10 +6,10 @@ from backend.data_model.education import Education
 from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
 from backend.data_model.project import Project
+from backend.gemini_test import generate_profile, generate_profile_from_input
 from backend.sample_data.output_data import profile_data
-from cors import add_cors_middleware
-from gemini_test import generate_profile
-from gemini_test import generate_profile_from_input
+from backend.cors import add_cors_middleware
+
 
 app = FastAPI(
     title="ddalkkak API", description="Portfolio result text API", version="1.0.0"
