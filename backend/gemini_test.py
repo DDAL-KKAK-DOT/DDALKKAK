@@ -1,8 +1,10 @@
 import os
-import shutil
+import json
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from backend.data_model.inputProfile import InputProfile
+from backend.data_model.outputProfile import OutputProfile
 from utils_fetch import fetch_page_text
 
 # .env 파일 로드
@@ -17,6 +19,35 @@ if not GEMINI_API_KEY:
 
 # Gemini 클라이언트 초기화
 genai_client = genai.Client(api_key=GEMINI_API_KEY)
+
+def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
+    profile_dict = {
+        "name": profile.name,
+        "email": profile.contact or "",  # contact 필드를 이메일로 사용
+        "phone": profile.contact or "",
+        "educations": profile.educations[0] if profile.educations else "",
+        "skills": [],  # skill 정보는 InputProfile에 없음
+    }
+    links = [str(link) for link in profile.activity_links]
+    prompt = build_resume_prompt(profile_dict, links)
+
+    cfg = types.GenerateContentConfig(response_mime_type="application/json")
+    resp = genai_client.models.generate_content(
+        model="models/gemini-2.5-flash-preview-04-17",
+        contents=prompt,
+        config=cfg,
+    )
+    raw = json.loads(resp.text)
+
+    # 🛠 누락된 필드가 있으면 기본값 설정
+    raw.setdefault("skills", [])
+    raw.setdefault("projects", [])
+    raw.setdefault("careers", [])
+    raw.setdefault("educations", [])
+    raw.setdefault("clubs", [])
+
+    return OutputProfile(**raw)
+
 
 def build_resume_prompt(profile: dict, urls: list[str]) -> str:
     sections = []
@@ -38,7 +69,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 - 이름: {profile['name']}
 - 이메일: {profile['email']}
 - 연락처: {profile['phone']}
-- 학력: {profile['education']}
+- 학력: {profile['educations']}
 - 기술 스택: {', '.join(profile['skills'])}
 
 링크 발췌:
@@ -47,11 +78,11 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 
 ### 작성 규칙
 1. **각 필드**는 다음과 같이 **풍부한 세부 내용**을 포함해야 합니다.  
-   - `skillset`: 기술명 뒤에 ‘초급/중급/상급’ 수준 + 1줄 설명을 덧붙이세요.  
+   - `skills`: 기술명 뒤에 ‘초급/중급/상급’ 수준 + 1줄 설명을 덧붙이세요.  
    - `projects[n].description`: 문제 상황 → 해결 과정 → 성과(숫자·지표) 순으로 3~5문장 작성.  
    - `projects[n].honor`: 정량 성과(예: *쿼리 속도 30% 개선*, *DAU 10 → 2 만 명*).  
-   - `career[n].description`: (기술·팀 규모·업무 흐름·리더십 사례)를 4문장 이상으로 상세히.  
-   - `education`, `clubs`도 구체적 경험·배운 점 포함(2문장↑).  
+   - `careers[n].description`: (기술·팀 규모·업무 흐름·리더십 사례)를 4문장 이상으로 상세히.  
+   - `educations`, `clubs`도 구체적 경험·배운 점 포함(2문장↑).  
 2. 한국어로 작성하고, 키 이름·중첩 구조 변경 금지.
 3. 마크다운·코드펜스 없이 **순수 JSON만 출력**.
 
@@ -59,7 +90,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 {{
   "profileInfo": "<이름/나이/직무 요약>",
   "shortIntro": "<간단 자기 소개>",
-  "skillset": ["<기술1 수준>", "..."],
+  "skills": ["<기술1 수준>", "..."],
   "projects": [
     {{
       "name": "<프로젝트명>",
@@ -70,7 +101,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
     }},
     …
   ],
-  "career": [
+  "careers": [
     {{
       "role": "<직무명>",
       "company": "<회사명>",
@@ -79,7 +110,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
     }},
     …
   ],
-  "education": [
+  "educations": [
     {{
       "name": "<교육명>",
       "period": "<기간>",
@@ -101,7 +132,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 {{
   "profileInfo": "홍길동 23세 백엔드",
   "shortIntro": "책임감 있는 개발자입니다!",
-  "skillset": [
+  "skills": [
     "java 상",
     "C++ 중",
     "Python 상"
@@ -122,7 +153,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
       "honor": ""
     }}
   ],
-  "career": [
+  "careers": [
     {{
       "role": "직무 이름",
       "company": "기업명",
@@ -136,7 +167,7 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
       "description": "업무 내용에 대한 설명을 입력하세요."
     }}
   ],
-  "education": [
+  "educations": [
     {{
       "name": "교육 이름",
       "period": "2017.03 - 2017.08",
@@ -171,40 +202,13 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 """
 
 
-def parse_llm_output(text: str) -> dict:
-    parts = text.split("EXPERIENCES:")
-    summary = parts[0].replace("SUMMARY:", "").strip() if parts else ""
-    experiences = []
-    if len(parts) > 1:
-        for line in parts[1].strip().splitlines():
-            if ":" in line and "." in line:
-                num_title, desc = line.split(":", 1)
-                title = num_title.split(". ", 1)[-1].strip()
-                experiences.append({"title": title, "description": desc.strip()})
-            elif line.strip():
-                experiences.append({"title": "", "description": line.strip()})
-    return {"summary": summary, "experiences": experiences}
-
-
-def find_wkhtmltopdf() -> str:
-    path = shutil.which("wkhtmltopdf")
-    if path:
-        return path
-    brew = "/usr/local/bin/wkhtmltopdf"
-    if os.path.isfile(brew):
-        return brew
-    raise IOError(
-        "`wkhtmltopdf` 실행 파일을 찾을 수 없습니다. 설치하거나 경로를 지정하세요."
-    )
-
-
-def main():
+def generate_profile() -> OutputProfile:
     profile = {
         "name": "김예찬",
         "email": "yechan@example.com",
         "phone": "010-1234-5678",
         "education": "중앙대학교 소프트웨어공학과",
-        "skills": ["Python", "FastAPI", "Flutter"],
+        "skills": ["Python ", "FastAPI", "Flutter"],
     }
     links = [
         "https://github.com/ii2001",
@@ -213,27 +217,17 @@ def main():
         "https://fossil-drifter-7be.notion.site/Yechan-Kim-1111058952168023a472d3e26729b4b7?pvs=4",
         "https://www.youtube.com/watch?v=tO3iGK2m4K8",
     ]
-    # 1) tools 정의
-    tools = [types.Tool(google_search=types.GoogleSearch())]
-
-    # 2) config 객체 생성
-    gen_cfg = types.GenerateContentConfig(
-        tools=tools,
-        response_mime_type="text/plain",
-    )
     prompt = build_resume_prompt(profile, links)
-
-    # 3) 호출
+    cfg = types.GenerateContentConfig(
+        response_mime_type="application/json",
+    )
+    # 호출
     resp = genai_client.models.generate_content(
         model="models/gemini-2.5-flash-preview-04-17",
         contents=prompt,  # ← str 또는 types.Content list
-        config=gen_cfg,  # ← 여기!
+        config=cfg,
     )
-
-    out = resp.text
-
-    print(out)
-
-
-if __name__ == "__main__":
-    main()
+    # resp.text가 JSON 문자열이라면
+    raw = json.loads(resp.text)
+    # Pydantic 모델로 검증·변환
+    return OutputProfile(**raw)
