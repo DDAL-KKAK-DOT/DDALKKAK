@@ -88,7 +88,14 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 
 1) 출력할 JSON 스키마:
 {{
-  "profileInfo": "<이름/나이/직무 요약>",
+  "profileInfo": {{
+  "name": "<이름>",
+  "english_name": "<영문 이름>",
+  "educations": ["<학교 이름>", "..."],
+  "desired_role": "<희망 직무>",
+  "contact": "<이메일 or 전화번호>",
+  "activity_links": ["<링크1>", "<링크2>", "..."]
+    }},
   "shortIntro": "<간단 자기 소개>",
   "skills": ["<기술1 수준>", "..."],
   "projects": [
@@ -130,7 +137,14 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
 
 2) 실제 데이터(샘플):
 {{
-  "profileInfo": "홍길동 23세 백엔드",
+  "profileInfo": {{
+  "name": "홍길동",
+  "english_name": "HONG GIl Dong",
+  "educations": ["중앙대"],
+  "desired_role": "백엔드 개발자",
+  "contact": "dfddf@gmail.com",
+  "activity_links": ["https://github.com/0dsdka"]
+    }},
   "shortIntro": "책임감 있는 개발자입니다!",
   "skills": [
     "java 상",
@@ -207,7 +221,7 @@ def generate_profile() -> OutputProfile:
         "name": "김예찬",
         "email": "yechan@example.com",
         "phone": "010-1234-5678",
-        "education": "중앙대학교 소프트웨어공학과",
+        "educations": "중앙대학교 소프트웨어공학과",
         "skills": ["Python ", "FastAPI", "Flutter"],
     }
     links = [
