@@ -1,14 +1,14 @@
-interface TextFieldProps {
-  id: string;
-  type: string;
-  value: string;
+interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  id?: string;
+  type?: string;
+  value?: string;
   placeholder?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 function TextField({
   id,
-  type,
+  type = "text",
   value,
   placeholder,
   onChange,
