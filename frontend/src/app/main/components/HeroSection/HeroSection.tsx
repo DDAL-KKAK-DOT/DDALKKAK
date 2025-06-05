@@ -33,7 +33,7 @@ export default function HeroSection() {
 
           <div className="flex flex-col gap-4 mt-8">
             <Link href="/templates" className="w-full sm:w-auto">
-              <Button variant="primary" size="lg" fullWidth>
+              <Button variant="primary" className="p-5" fullWidth>
                 무료로 시작하기
               </Button>
             </Link>

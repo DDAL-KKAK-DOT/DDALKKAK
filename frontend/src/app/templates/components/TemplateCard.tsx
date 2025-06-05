@@ -33,8 +33,7 @@ export default function TemplateCard({
     >
       <div className="flex-1" />
       <Button
-        variant="outline"
-        size="md"
+        variant="neutral"
         fullWidth
         className={cn(
           "transition-opacity",

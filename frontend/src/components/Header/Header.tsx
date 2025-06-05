@@ -17,15 +17,6 @@ export default function Header() {
           </div>
           <span className="text-4xl font-bold">DDALKKAK</span>
         </Link>
-
-        <nav className="flex items-center gap-6">
-          <Link
-            href="/login"
-            className="body-m-medium text-gray-600 hover:text-gray-900"
-          >
-            로그인
-          </Link>
-        </nav>
       </div>
     </header>
   );
