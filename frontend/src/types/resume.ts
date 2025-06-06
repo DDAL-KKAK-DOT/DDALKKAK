@@ -12,7 +12,7 @@ export type ProfileInfo = {
   english_name: string;
   contact: string;
   desired_role: string;
-  education: string[];
+  educations: string[];
   activity_links: string[];
 };
 
@@ -52,7 +52,7 @@ export interface AIResumeResponse {
   shortIntro: ShortIntro;
   skills: Skill[];
   projects: Project[];
-  career: Career[];
-  education: Education[];
+  careers: Career[];
+  educations: Education[];
   clubs: Club[];
 }
