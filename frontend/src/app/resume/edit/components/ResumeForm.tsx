@@ -127,7 +127,7 @@ export default function ResumeForm({ resume, setResume }: ResumeFormProps) {
   const handleAddEducation = () => {
     setResume((prev) => ({
       ...prev,
-      education: [
+      educations: [
         ...prev.educations,
         { name: "", period: "", description: "" },
       ],
@@ -137,13 +137,13 @@ export default function ResumeForm({ resume, setResume }: ResumeFormProps) {
     setResume((prev) => {
       const next = [...prev.educations];
       next[idx] = { ...next[idx], [field]: value };
-      return { ...prev, education: next };
+      return { ...prev, educations: next };
     });
   };
   const handleRemoveEducation = (idx: number) => {
     setResume((prev) => {
       const next = prev.educations.filter((_, i) => i !== idx);
-      return { ...prev, education: next };
+      return { ...prev, educations: next };
     });
   };
 
@@ -215,7 +215,7 @@ export default function ResumeForm({ resume, setResume }: ResumeFormProps) {
         />
         <EducationsSection
           ref={(el: HTMLDivElement | null) => {
-            sectionRefs.current["education"] = el;
+            sectionRefs.current["educations"] = el;
           }}
           resume={resume}
           handleEducationChange={handleEducationChange}
