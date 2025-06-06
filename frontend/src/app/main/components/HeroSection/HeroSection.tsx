@@ -26,8 +26,11 @@ export default function HeroSection() {
               작성해보세요
             </h1>
             <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-              어쩌구저쩌구 서비스 설명 어쩌구저쩌구 서비스 설명 어쩌구저쩌구
-              서비스 설명 어쩌구저쩌구 서비스 설명 어쩌구저쩌구 서비스 설명
+              처음 이력서를 쓰시나요?
+              <br />
+              링크만 넣으면, 딸깍이 기본 틀을 뚝딱 만들어드려요.
+              <br />
+              당신의 경험과 활동을 채워 넣어, 시선을 끄는 이력서를 완성해보세요!
             </p>
           </div>
 
