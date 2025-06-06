@@ -1,5 +1,5 @@
 import Button from "@/components/Button/Button";
-import { cn } from "@/lib/cn";
+import { cn } from "@/utils/cn";
 import React from "react";
 
 interface TemplateCardProps {

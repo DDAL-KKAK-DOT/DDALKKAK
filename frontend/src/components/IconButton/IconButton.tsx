@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import { type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/cn";
+import { cn } from "@/utils/cn";
 import { buttonVariants } from "@/components/Button/buttonVariants";
 
 interface IconButtonProps
