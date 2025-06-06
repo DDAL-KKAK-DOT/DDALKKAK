@@ -1,0 +1,149 @@
+/* Pretendard Web Font */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+/* Base container styles */
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--resume-bg-color, #ffffff);
+  font-family:
+    "Pretendard",
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    "Helvetica Neue",
+    "Segoe UI",
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    sans-serif;
+}
+
+.content {
+  min-height: 600px;
+  padding: 2.5rem;
+  margin: 0 auto;
+}
+
+/* Profile section */
+.profile {
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.name {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  margin-bottom: 0.75rem;
+}
+
+.englishName {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text-secondary, #4b5563);
+  margin-left: 0.75rem;
+}
+
+.contactInfo {
+  font-size: 1.125rem;
+  color: var(--text-secondary, #4b5563);
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.contactItem {
+  color: var(--text-tertiary, #6b7280);
+}
+
+/* Short introduction */
+.shortIntro {
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+  color: var(--text-secondary, #4b5563);
+  line-height: 1.75;
+  font-style: italic;
+  border-left: 4px solid var(--border-color, #e5e7eb);
+  padding-left: 1rem;
+}
+
+/* Section styles */
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+/* Skills section */
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skillTag {
+  padding: 0.25rem 0.75rem;
+  background-color: var(--tag-bg, #f3f4f6);
+  color: var(--text-secondary, #4b5563);
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+/* Project, Career, Education, Club sections */
+.item {
+  margin-bottom: 1.5rem;
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.25rem;
+}
+
+.itemTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+}
+
+.itemPeriod {
+  font-size: 0.875rem;
+  color: var(--text-tertiary, #6b7280);
+}
+
+.itemSubtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary, #4b5563);
+  margin-bottom: 0.5rem;
+}
+
+.itemDescription {
+  color: var(--text-secondary, #4b5563);
+  line-height: 1.75;
+}
+
+.itemHonor {
+  font-size: 0.875rem;
+  color: var(--accent-color, #2563eb);
+  font-weight: 500;
+}
