@@ -1,5 +1,10 @@
 from typing import List
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi.responses import StreamingResponse, FileResponse
+from pathlib import Path
+import io
+import pdfkit
+from uuid import uuid4
 from backend.data_model.career import Career
 from backend.data_model.club import Club
 from backend.data_model.education import Education
@@ -18,6 +23,8 @@ app = FastAPI(
 # CORS 미들웨어 추가
 app = add_cors_middleware(app)
 
+PDF_OUTPUT_DIR = Path(__file__).parent / "generated_pdfs"
+PDF_OUTPUT_DIR.mkdir(exist_ok=True)  
 
 @app.get("/")
 async def root():
@@ -63,6 +70,25 @@ async def generate_profile_endpoint(profile: InputProfile):
     if not profile.activity_links:
         raise HTTPException(status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다.")
     return generate_profile_from_input(profile)
+
+@app.post("/api/convert/html-to-pdf", tags=["유틸리티"])
+async def convert_html_to_pdf(html_file: UploadFile = File(...)):
+    if html_file.content_type not in {"text/html", "application/xhtml+xml"}:
+        raise HTTPException(400, "HTML 파일을 업로드해주세요.")
+
+    html_raw = (await html_file.read()).decode("utf-8", "replace")
+
+    stem = Path(html_file.filename or "document").stem
+    pdf_name = f"{stem}_{uuid4().hex}.pdf"
+    pdf_path = PDF_OUTPUT_DIR / pdf_name
+
+    pdfkit.from_string(html_raw, str(pdf_path))
+
+    return FileResponse(
+        path=str(pdf_path),
+        media_type="application/pdf",
+        filename=f"{stem}.pdf"
+    )
 
 # 에러 헨들링
 @app.get("/api/profile/{section}")
