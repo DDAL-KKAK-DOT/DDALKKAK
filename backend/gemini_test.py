@@ -5,7 +5,7 @@ from google import genai
 from google.genai import types
 from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
-from utils_fetch import fetch_page_text
+from backend.utils_fetch import fetch_page_text
 
 # .env 파일 로드
 load_dotenv()
