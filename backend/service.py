@@ -14,6 +14,7 @@ from backend.data_model.project import Project
 from backend.gemini_test import generate_profile, generate_profile_from_input
 from backend.sample_data.output_data import profile_data
 from backend.cors import add_cors_middleware
+from backend.utils_convert import convert_html_to_pdf_logic
 
 
 app = FastAPI(
@@ -71,23 +72,14 @@ async def generate_profile_endpoint(profile: InputProfile):
         raise HTTPException(status_code=422, detail="활동 링크는 최소 하나 이상 입력해야 합니다.")
     return generate_profile_from_input(profile)
 
+
 @app.post("/api/convert/html-to-pdf", tags=["유틸리티"])
 async def convert_html_to_pdf(html_file: UploadFile = File(...)):
-    if html_file.content_type not in {"text/html", "application/xhtml+xml"}:
-        raise HTTPException(400, "HTML 파일을 업로드해주세요.")
-
-    html_raw = (await html_file.read()).decode("utf-8", "replace")
-
-    stem = Path(html_file.filename or "document").stem
-    pdf_name = f"{stem}_{uuid4().hex}.pdf"
-    pdf_path = PDF_OUTPUT_DIR / pdf_name
-
-    pdfkit.from_string(html_raw, str(pdf_path))
-
+    pdf_path = convert_html_to_pdf_logic(html_file, PDF_OUTPUT_DIR)
     return FileResponse(
         path=str(pdf_path),
         media_type="application/pdf",
-        filename=f"{stem}.pdf"
+        filename=Path(pdf_path).stem + ".pdf"
     )
 
 # 에러 헨들링
