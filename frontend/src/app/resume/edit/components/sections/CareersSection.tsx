@@ -1,5 +1,5 @@
 import React from "react";
-import { Section, TextField } from "@/components/Field";
+import { Section, TextareaField, TextField } from "@/components/Field";
 import Button from "@/components/Button/Button";
 import Icon from "@/components/Icon/Icon";
 import IconButton from "@/components/IconButton/IconButton";
@@ -61,8 +61,8 @@ function CareersSection({
               }
               placeholder="기간 (예: 2023.01 - 2023.12)"
             />
-            <TextField
-              type="text"
+            <TextareaField
+              id={`career-description-${idx}`}
               value={career.description}
               onChange={(e) =>
                 handleCareerChange(idx, "description", e.target.value)

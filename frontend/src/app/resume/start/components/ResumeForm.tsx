@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Section from "@/components/Field/Section";
 import Button from "@/components/Button/Button";
 import { InputResumeProfileRequest, AIResumeResponse } from "@/types/resume";
@@ -12,6 +12,8 @@ import ActivityLinksField from "./ActivityLinksField";
 
 export default function ResumeForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const template = searchParams.get("template") || "type1";
   const [education, setEducation] = useState<string[]>([""]);
   const [activityLinks, setActivityLinks] = useState<string[]>([""]);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +37,7 @@ export default function ResumeForm() {
   const { mutate, isPending } = useSubmitAIResumeMutation();
   const onSuccess = (data: AIResumeResponse) => {
     setResume(data);
-    router.push("/resume/edit");
+    router.push(`/resume/edit?template=${template}`);
   };
   const onError = (e: Error) => {
     setError(e.message);
