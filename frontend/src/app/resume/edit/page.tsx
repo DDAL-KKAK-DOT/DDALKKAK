@@ -31,9 +31,10 @@ export default function EditPage() {
   const searchParams = useSearchParams();
   const template = searchParams.get("type") || "type1";
 
-  const { uploadResume, isUploading, error } = useResumeUpload({
+  const { uploadResume, isUploading } = useResumeUpload({
     onError: (error) => {
       console.error("PDF 변환 실패:", error);
+      alert((error?.message || "") + " 다시 시도해주세요.");
     },
   });
 
@@ -87,11 +88,6 @@ export default function EditPage() {
             >
               {isUploading ? "PDF 변환 중..." : "PDF 다운로드"}
             </Button>
-            {error && (
-              <div className="text-red-500 text-sm whitespace-nowrap">
-                PDF 변환 중 오류가 발생했습니다: {error.message}
-              </div>
-            )}
           </div>
 
           {/* 프리뷰 */}
