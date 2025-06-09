@@ -37,7 +37,7 @@ async def get_resume():
     return generate_profile()
 
 
-@app.get("/api/profileInfo", response_model=InputProfile, tags=["프로필"])
+@app.get("/api/profile/profileInfo", response_model=InputProfile, tags=["프로필"])
 async def get_profile():
     return profile_data["profileInfo"]
 
