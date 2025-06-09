@@ -12,6 +12,8 @@ export const buttonVariants = cva(
         secondary:
           "rounded-[8px] bg-button-secondary-bg_main text-button-secondary-text_default button-m-medium hover:bg-button-secondary-bg_pressed hover:text-button-secondary-text_pressed active:bg-button-secondary-bg_pressed active:text-button-secondary-text_pressed disabled:bg-button-secondary-bg_disabled disabled:text-button-secondary-text_disabled [&.pressed]:bg-button-secondary-bg_pressed [&.pressed]:text-button-secondary-text_pressed",
         text: "bg-transparent",
+        selector:
+          "rounded-full border border-blue-500 bg-white text-blue-600 font-semibold w-10 h-10 hover:bg-blue-50 active:bg-blue-100 [&.pressed]:bg-blue-600 [&.pressed]:text-white [&.pressed]:border-blue-600 transition-colors duration-100",
       },
       fullWidth: {
         true: "w-full",

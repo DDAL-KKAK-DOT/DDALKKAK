@@ -169,7 +169,7 @@ export default function ResumeForm({ resume, setResume }: ResumeFormProps) {
   };
 
   return (
-    <div>
+    <div className="w-full p-5">
       <ResumeFormTabs current={currentTab} onChange={handleTabChange} />
       <div className="space-y-8">
         <ProfileSection
