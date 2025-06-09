@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/reset.css";
 import "@/styles/globals.css";
 import Providers from "./providers";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "DDALKKAK - AI 기반 이력서 작성 서비스",
@@ -20,7 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Suspense
+            fallback={
+              <div className="flex-1 flex items-center justify-center">
+                <div className="text-gray-600">로딩 중...</div>
+              </div>
+            }
+          >
+            {children}
+          </Suspense>
+        </Providers>
       </body>
     </html>
   );
