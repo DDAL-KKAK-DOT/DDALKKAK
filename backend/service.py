@@ -54,12 +54,12 @@ async def get_skills():
 
 @app.get("/api/profile/career", response_model=List[Career], tags=["프로필"])
 async def get_career():
-    return profile_data["career"]
+    return profile_data["careers"]
 
 
 @app.get("/api/profile/education", response_model=List[Education], tags=["프로필"])
 async def get_education():
-    return profile_data["education"]
+    return profile_data["educations"]
 
 
 @app.get("/api/profile/clubs", response_model=List[Club], tags=["프로필"])
