@@ -29,7 +29,7 @@ export default function EditPage() {
   const { resume, setResume } = useResume();
   const resumeRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
-  const template = searchParams.get("type") || "type1";
+  const template = searchParams.get("template") || "type1";
 
   const { uploadResume, isUploading } = useResumeUpload({
     onError: (error) => {

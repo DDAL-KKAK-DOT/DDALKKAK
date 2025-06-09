@@ -12,35 +12,35 @@ const ResumeTypeSelector = ({ templateType }: Props) => {
       <Button
         variant="selector"
         isPressed={templateType === "type1"}
-        onClick={() => router.push("?type=type1")}
+        onClick={() => router.push("?template=type1")}
       >
         1
       </Button>
       <Button
         variant="selector"
         isPressed={templateType === "type2"}
-        onClick={() => router.push("?type=type2")}
+        onClick={() => router.push("?template=type2")}
       >
         2
       </Button>
       <Button
         variant="selector"
         isPressed={templateType === "type3"}
-        onClick={() => router.push("?type=type3")}
+        onClick={() => router.push("?template=type3")}
       >
         3
       </Button>
       <Button
         variant="selector"
         isPressed={templateType === "type4"}
-        onClick={() => router.push("?type=type4")}
+        onClick={() => router.push("?template=type4")}
       >
         4
       </Button>
       <Button
         variant="selector"
         isPressed={templateType === "type5"}
-        onClick={() => router.push("?type=type5")}
+        onClick={() => router.push("?template=type5")}
       >
         5
       </Button>
