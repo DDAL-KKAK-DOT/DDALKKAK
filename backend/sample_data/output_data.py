@@ -1,4 +1,6 @@
 # LLM output sample data (실제로는 LLM에서 가져올 것)
+# auto CI 테스트용 수정 주석
+
 profile_data = {
     "profileInfo": {
     "name": "홍길동",
