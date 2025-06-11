@@ -20,3 +20,4 @@ jobs:
           MERGE_FORKS: false
           MERGE_DELETE_BRANCH: true
           MERGE_COMMIT_MESSAGE: pull-request-title
+          MERGE_LABELS: ""
