@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: { Accept: "application/json" },
 };
 
