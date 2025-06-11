@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Auto merge PR when 3+ approvals for dev-be
         uses: pascalgn/automerge-action@v0.16.3
-        env:
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_METHOD: squash
           APPROVALS: 3
