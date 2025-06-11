@@ -1,4 +1,7 @@
 import functools
+import os
+import platform
+import shutil
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -35,6 +38,18 @@ def _static_fetch(url: str) -> str:
     cleaned_html = doc.summary()
     return BeautifulSoup(cleaned_html, "html.parser").get_text(strip=True)
 
+def _select_driver(options: Options) -> Service:
+    arch = platform.machine()
+    if arch in ("aarch64", "arm64"):
+        snap_drv = "/snap/bin/chromium.chromedriver"
+        snap_bin = "/snap/chromium/current/command-chromium.wrapper"
+        if os.path.exists(snap_drv) and os.path.exists(snap_bin):
+            options.binary_location = snap_bin
+            return Service(snap_drv)
+        alt = shutil.which("chromedriver")
+        if alt:
+            return Service(alt)
+    return Service(ChromeDriverManager().install())
 
 def _dynamic_fetch(url: str) -> str:
     """
@@ -42,20 +57,16 @@ def _dynamic_fetch(url: str) -> str:
     """
     # Chrome 옵션 설정
     options = Options()
-    options.add_argument("--headless")
+    options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument(f'user-agent={UA["User-Agent"]}')
 
-    # ChromeDriver 자동 설치
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(service=_select_driver(options), options=options)
 
     try:
         driver.get(url)
-        time.sleep(2)  # 초기 로딩 대기
-
-        # 필요 시 페이지 끝까지 스크롤
+        time.sleep(2)
         last_height = driver.execute_script("return document.body.scrollHeight")
         while True:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -64,10 +75,7 @@ def _dynamic_fetch(url: str) -> str:
             if new_height == last_height:
                 break
             last_height = new_height
-
-        # body 태그 내 모든 텍스트 수집
-        body = driver.find_element("tag name", "body")
-        text = body.text
+        text = driver.find_element("tag name", "body").text
     finally:
         driver.quit()
 
