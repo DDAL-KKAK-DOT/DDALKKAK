@@ -1,0 +1,23 @@
+name: Auto Merge (3+ approvals, dev-be only)
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  automerge:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Auto merge PR when 3+ approvals for dev-be
+        uses: pascalgn/automerge-action@v0.16.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_METHOD: squash
+          APPROVALS: 3
+          TARGET_BRANCH: dev-be
+          MERGE_FORKS: false
+          MERGE_DELETE_BRANCH: true
+          MERGE_COMMIT_MESSAGE: pull-request-title
+          MERGE_LABELS: ""
