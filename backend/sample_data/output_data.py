@@ -1,6 +1,15 @@
-# LLM output sample data (실제로는 LLM에서 가져올 것)
 profile_data = {
-    "profileInfo": "홍길동 23세 백엔드",
+    # 1) profileInfo: 반드시 딕셔너리
+    "profileInfo": {
+        "name": "홍길동",
+        "english_name": "Hong Gil-dong",   # 영문 이름 없으면 "" 가능
+        "educations": ["중앙대학교"],       # 리스트 형태
+        "desired_role": "백엔드 개발자",
+        "contact": "hong@example.com",    # 이메일이나 전화번호
+        "activity_links": []              # 없으면 빈 리스트
+    },
+
+    # 2) 나머지 키는 그대로 사용
     "shortIntro": "책임감 있는 개발자입니다!",
     "skills": [
         "java 상",
