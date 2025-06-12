@@ -20,6 +20,7 @@ if not GEMINI_API_KEY:
 # Gemini 클라이언트 초기화
 genai_client = genai.Client(api_key=GEMINI_API_KEY)
 
+
 def generate_profile_from_input(profile: InputProfile) -> OutputProfile:
     profile_dict = {
         "name": profile.name,
