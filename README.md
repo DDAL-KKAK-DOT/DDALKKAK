@@ -36,7 +36,7 @@
   </tr>
   <tr align="center">
     <td>
-      <img src="https://github.com/user-attachments/assets/3b6fd7c5-aa97-453d-8193-b0e21474c782" alt="메인 랜딩 페이지" width="900"/>
+      <img src="https://github.com/user-attachments/assets/3b6fd7c5-aa97-453d-8193-b0e21474c782" alt="메인 랜딩 페이지" width="1000"/>
     </td>
   </tr>
 </table>
@@ -53,7 +53,7 @@
   </tr>
   <tr align="center">
     <td>
-      <img src="https://github.com/user-attachments/assets/97559b9b-fbd1-4730-8f5f-1dd7c1b25968" alt="템플릿 선택 화면" width="900"/>
+      <img src="https://github.com/user-attachments/assets/97559b9b-fbd1-4730-8f5f-1dd7c1b25968" alt="템플릿 선택 화면" width="1000"/>
     </td>
   </tr>
 </table>
@@ -74,7 +74,7 @@
   </tr>
   <tr align="center">
     <td>
-      <img src="https://github.com/user-attachments/assets/24c96162-9e31-4c43-a097-f8d9cfa3c330" alt="기본정보입력 화면" width="900"/>
+      <img src="https://github.com/user-attachments/assets/24c96162-9e31-4c43-a097-f8d9cfa3c330" alt="기본정보입력 화면" width="1000"/>
     </td>
   </tr>
 </table>
@@ -93,7 +93,7 @@
   </tr>
   <tr align="center">
     <td>
-      <img src="https://github.com/user-attachments/assets/41fe2a4d-094f-46e0-807e-c26126d41dd3" alt="이력서 편집 화면" width="900"/>
+      <img src="https://github.com/user-attachments/assets/41fe2a4d-094f-46e0-807e-c26126d41dd3" alt="이력서 편집 화면" width="1000"/>
     </td>
   </tr>
 </table>
@@ -121,7 +121,7 @@
   </tr>
   <tr align="center">
     <td>
-      <img src="https://github.com/user-attachments/assets/13e69e77-2f37-47e6-b06a-800d69ee5cfc" alt="pdf 다운화면" width="900"/>
+      <img src="https://github.com/user-attachments/assets/13e69e77-2f37-47e6-b06a-800d69ee5cfc" alt="pdf 다운화면" width="1000"/>
     </td>
   </tr>
 </table>
