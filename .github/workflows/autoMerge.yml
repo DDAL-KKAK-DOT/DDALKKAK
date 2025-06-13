@@ -1,0 +1,63 @@
+name: Auto Merge (3+ approvals, dev-be & dev-fe)
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  automerge:
+    if: |
+      github.event.review.state == 'approved' &&
+      (github.event.pull_request.base.ref == 'dev-be' || github.event.pull_request.base.ref == 'dev-fe')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check approvals count
+        id: check-approvals
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+            });
+            
+            // 최신 리뷰만 고려 (같은 사용자가 여러 번 리뷰한 경우)
+            const latestReviews = {};
+            reviews.forEach(review => {
+              if (!latestReviews[review.user.login] || 
+                  new Date(review.submitted_at) > new Date(latestReviews[review.user.login].submitted_at)) {
+                latestReviews[review.user.login] = review;
+              }
+            });
+            
+            const approvals = Object.values(latestReviews).filter(review => 
+              review.state === 'APPROVED'
+            ).length;
+            
+            console.log(`Current approvals: ${approvals}`);
+            console.log(`Approved by:`, Object.values(latestReviews)
+              .filter(review => review.state === 'APPROVED')
+              .map(review => review.user.login)
+            );
+            
+            core.setOutput('approvals', approvals);
+            core.setOutput('should-merge', approvals >= 3);
+
+      - name: Auto merge PR
+        if: steps.check-approvals.outputs.should-merge == 'true'
+        uses: pascalgn/automerge-action@v0.16.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_METHOD: squash
+          MERGE_LABELS: ""
+          MERGE_REQUIRED_APPROVALS: 0  # 이미 위에서 체크했으므로 0으로 설정
+          MERGE_FORKS: false
+          MERGE_DELETE_BRANCH: true
+          MERGE_COMMIT_MESSAGE: pull-request-title
+
+      - name: Log merge result
+        if: steps.check-approvals.outputs.should-merge == 'true'
+        run: |
+          echo "✅ PR to ${{ github.event.pull_request.base.ref }} has been auto-merged with ${{ steps.check-approvals.outputs.approvals }} approvals"
