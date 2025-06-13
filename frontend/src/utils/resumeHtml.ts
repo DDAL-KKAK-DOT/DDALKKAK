@@ -28,7 +28,6 @@ export function generateResumeHtml(
   };
 
   const themeBackgroundColor = themeBackgroundColors[theme];
-
   return `
     <!DOCTYPE html>
     <html>
