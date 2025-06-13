@@ -1,0 +1,226 @@
+/* System font, minimal green accent, white base, compact/clean */
+.container {
+  width: 100%;
+  min-height: 100%;
+  background: #fff;
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+  color: #222;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.profile {
+  margin-bottom: 1rem;
+}
+
+.name {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #14532d;
+  margin-bottom: 0.75rem;
+}
+
+.englishName {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #22c55e;
+  margin-left: 0.75rem;
+}
+
+.contactInfo {
+  font-size: 1.125rem;
+  color: #4b5563;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contactInfo > * {
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.contactInfo > *:last-child {
+  margin-right: 0;
+}
+
+.contactItem {
+  color: #22c55e;
+}
+
+.shortIntro {
+  font-size: 1.125rem;
+  color: #374151;
+  line-height: 1.75;
+  font-style: italic;
+  border-left: 4px solid #22c55e;
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  white-space: pre-line;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Section styles - vertical stack */
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #14532d;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #22c55e;
+}
+
+/* Skills section */
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.skillsList > * {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.skillsList > *:last-child {
+  margin-right: 0;
+}
+
+.skillTag {
+  padding: 0.375rem 0.875rem;
+  background-color: #f0fdf4;
+  color: #15803d;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid #d1fae5;
+}
+
+/* Timeline styles */
+.timeline {
+  position: relative;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #d1fae5;
+}
+
+.timelineItem {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.timelineItem:last-child {
+  margin-bottom: 0;
+}
+
+.timelineDot {
+  position: absolute;
+  left: 0.4rem;
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  background-color: #22c55e;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.timelineContent {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f1f5f9;
+  white-space: pre-line;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.itemTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #14532d;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.itemPeriod {
+  font-size: 0.875rem;
+  color: #22c55e;
+  background-color: #f0fdf4;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.itemSubtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #15803d;
+  margin-bottom: 0.75rem;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.itemDescription {
+  color: #4b5563;
+  line-height: 1.75;
+  font-size: 0.9375rem;
+  margin-bottom: 0.5rem;
+  white-space: pre-line;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.itemHonor {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #22c55e;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  background-color: #f0fdf4;
+  border-radius: 0.375rem;
+  display: inline-block;
+  border: 1px solid #d1fae5;
+}
+
+@media (max-width: 900px) {
+  .content {
+    padding: 1rem;
+  }
+}

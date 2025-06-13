@@ -80,6 +80,10 @@
   font-style: italic;
   border-left: 4px solid var(--border-color, #e5e7eb);
   padding-left: 1rem;
+  white-space: pre-line;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Section styles */
@@ -139,6 +143,10 @@
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--text-primary, #111827);
+  white-space: pre-line;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .itemPeriod {
@@ -151,11 +159,19 @@
   font-weight: 500;
   color: var(--text-secondary, #4b5563);
   margin-bottom: 0.5rem;
+  white-space: pre-line;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .itemDescription {
   color: var(--text-secondary, #4b5563);
   line-height: 1.75;
+  white-space: pre-line;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .itemHonor {
