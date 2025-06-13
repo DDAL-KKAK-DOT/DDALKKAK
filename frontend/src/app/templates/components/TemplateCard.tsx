@@ -1,4 +1,3 @@
-import Button from "@/components/Button/Button";
 import { cn } from "@/utils/cn";
 import React from "react";
 
@@ -32,16 +31,6 @@ export default function TemplateCard({
       onMouseLeave={onMouseLeave}
     >
       <div className="flex-1" />
-      <Button
-        variant="neutral"
-        fullWidth
-        className={cn(
-          "transition-opacity",
-          highlighted ? "opacity-100" : "opacity-0 hover:opacity-100",
-        )}
-      >
-        이 템플릿으로 진행하기
-      </Button>
     </div>
   );
 }
