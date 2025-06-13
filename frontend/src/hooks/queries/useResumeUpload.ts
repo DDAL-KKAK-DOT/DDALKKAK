@@ -5,6 +5,7 @@ import { generateResumeHtml } from "@/utils/resumeHtml";
 interface UseResumeUploadOptions {
   onSuccess?: () => void;
   onError?: (error: Error) => void;
+  theme?: "type1" | "type2" | "type3" | "type4" | "type5";
 }
 
 const downloadPdf = async (pdfBlob: Blob) => {
@@ -30,14 +31,13 @@ export function useResumeUpload(options?: UseResumeUploadOptions) {
         throw new Error("Invalid resume content");
       }
 
-      const html = generateResumeHtml(resumeContent);
+      const html = generateResumeHtml(resumeContent, options?.theme);
       if (!html) {
         throw new Error("Failed to generate HTML");
       }
 
       try {
         const pdfBlob = await uploadResume(html);
-
         await downloadPdf(pdfBlob);
       } catch (error) {
         throw new Error("PDF 변환에 실패했습니다.", { cause: error });

@@ -1,7 +1,7 @@
 import type { AIResumeResponse } from "@/types/resume";
-import styles from "./ResumePreviewType1.module.css";
+import styles from "./ResumePreviewType2.module.css";
 
-export default function ResumePreviewType1({
+export default function ResumePreviewType2({
   resume,
 }: {
   resume: AIResumeResponse;
@@ -21,14 +21,14 @@ export default function ResumePreviewType1({
           </div>
           <div className={styles.contactInfo}>
             {resume.profileInfo.contact && (
-              <span className={styles.contactItem}>
+              <div className={styles.contactItem}>
                 {resume.profileInfo.contact}
-              </span>
+              </div>
             )}
             {resume.profileInfo.desired_role && (
-              <span className={styles.contactItem}>
-                • {resume.profileInfo.desired_role}
-              </span>
+              <div className={styles.contactItem}>
+                {resume.profileInfo.desired_role}
+              </div>
             )}
           </div>
         </div>
@@ -73,7 +73,7 @@ export default function ResumePreviewType1({
         {/* 경력 */}
         {resume.careers.length > 0 && (
           <div className={styles.section}>
-            <h2 className={styles.sectionTitle}></h2>
+            <h2 className={styles.sectionTitle}>경력</h2>
             {resume.careers.map((c, i) => (
               <div key={i} className={styles.item}>
                 <div className={styles.itemHeader}>
@@ -90,7 +90,7 @@ export default function ResumePreviewType1({
         {/* 학력 */}
         {resume.educations.length > 0 && (
           <div className={styles.section}>
-            <h2 className={styles.sectionTitle}>Education</h2>
+            <h2 className={styles.sectionTitle}>학력</h2>
             {resume.educations.map((e, i) => (
               <div key={i} className={styles.item}>
                 <div className={styles.itemHeader}>
@@ -106,7 +106,7 @@ export default function ResumePreviewType1({
         {/* 동아리/활동 */}
         {resume.clubs.length > 0 && (
           <div className={styles.section}>
-            <h2 className={styles.sectionTitle}>Experience</h2>
+            <h2 className={styles.sectionTitle}>동아리/활동</h2>
             {resume.clubs.map((c, i) => (
               <div key={i} className={styles.item}>
                 <div className={styles.itemHeader}>

@@ -1,47 +1,39 @@
-import Button from "@/components/Button/Button";
-import { cn } from "@/utils/cn";
 import React from "react";
+import Image from "next/image";
 
 interface TemplateCardProps {
   highlighted?: boolean;
-  className?: string;
-  onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onClick?: () => void;
+  templateType: string;
+  previewImage: string;
 }
 
 export default function TemplateCard({
-  highlighted = false,
-  className = "",
-  onClick,
+  highlighted,
   onMouseEnter,
   onMouseLeave,
+  onClick,
+  templateType,
+  previewImage,
 }: TemplateCardProps) {
   return (
     <div
-      className={cn(
-        "w-full rounded-xl flex flex-col items-center justify-between p-8 transition-all duration-300 cursor-pointer shadow-lg relative aspect-[4/5] transform",
-        highlighted
-          ? "bg-gray-100 shadow-xl scale-105"
-          : "bg-gray-200 opacity-80 hover:bg-gray-100 hover:opacity-100 hover:shadow-xl hover:scale-105",
-        className,
-      )}
-      style={{ transformOrigin: "center bottom" }}
-      onClick={onClick}
+      className={`w-full aspect-[3/4] rounded-xl overflow-hidden cursor-pointer transition-all duration-200 ${
+        highlighted ? "scale-105 shadow-xl" : "shadow-md"
+      }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onClick={onClick}
     >
-      <div className="flex-1" />
-      <Button
-        variant="neutral"
-        fullWidth
-        className={cn(
-          "transition-opacity",
-          highlighted ? "opacity-100" : "opacity-0 hover:opacity-100",
-        )}
-      >
-        이 템플릿으로 진행하기
-      </Button>
+      <Image
+        src={previewImage}
+        alt={`Template ${templateType} preview`}
+        width={280}
+        height={373}
+        className="w-full h-full object-cover"
+      />
     </div>
   );
 }

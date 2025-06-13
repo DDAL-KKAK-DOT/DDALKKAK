@@ -1,11 +1,10 @@
 /* Pretendard Web Font */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
-/* Base container styles */
 .container {
   width: 100%;
   height: 100%;
-  background-color: var(--resume-bg-color, #ffffff);
+  background-color: #ffffff;
   font-family:
     "Pretendard",
     -apple-system,
@@ -25,41 +24,47 @@
 
 .content {
   min-height: 600px;
-  padding: 2.5rem;
+  padding: 3rem;
   margin: 0 auto;
+  max-width: 1000px;
+}
+
+.header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f3f4f6;
 }
 
 /* Profile section */
 .profile {
-  border-bottom: 1px solid var(--border-color, #e5e7eb);
-  padding-bottom: 1.5rem;
-  margin-bottom: 1.5rem;
+  width: 100%;
+  margin-bottom: 2rem;
 }
 
 .name {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: var(--text-primary, #111827);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #111827;
   margin-bottom: 0.75rem;
+  letter-spacing: -0.025em;
 }
 
 .englishName {
   font-size: 1.5rem;
   font-weight: 400;
-  color: var(--text-secondary, #4b5563);
-  margin-left: 0.75rem;
+  color: #6b7280;
+  margin-left: 1rem;
 }
 
 .contactInfo {
   font-size: 1.125rem;
-  color: var(--text-secondary, #4b5563);
-  margin-bottom: 0.75rem;
+  color: #4b5563;
   display: flex;
   flex-wrap: wrap;
 }
 
 .contactInfo > * {
-  margin-right: 0.5rem;
+  margin-right: 1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -68,36 +73,86 @@
 }
 
 .contactItem {
-  color: var(--text-tertiary, #6b7280);
+  color: #6b7280;
 }
 
 /* Short introduction */
 .shortIntro {
-  margin-bottom: 2rem;
-  font-size: 1.125rem;
-  color: var(--text-secondary, #4b5563);
+  font-size: 1.25rem;
+  color: #374151;
   line-height: 1.75;
-  font-style: italic;
-  border-left: 4px solid var(--border-color, #e5e7eb);
-  padding-left: 1rem;
+  font-weight: 300;
+  max-width: 800px;
   white-space: pre-line;
   word-break: keep-all;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
+/* Main content layout */
+.main {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 1rem 0;
+}
+
+.leftColumn {
+  display: table-cell;
+  width: 35%;
+  vertical-align: top;
+}
+
+.rightColumn {
+  display: table-cell;
+  width: 65%;
+  vertical-align: top;
+}
+
+/* Ensure content doesn't overlap */
+.leftColumn > * {
+  margin-bottom: 2.5rem;
+}
+
+.rightColumn > * {
+  margin-bottom: 2.5rem;
+}
+
+/* Adjust specific sections for better spacing */
+.leftColumn .section {
+  margin-bottom: 2rem;
+}
+
+.rightColumn .section {
+  margin-bottom: 2rem;
+}
+
 /* Section styles */
 .section {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
 }
 
 .sectionTitle {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--text-primary, #111827);
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  color: #111827;
+  margin-bottom: 1.25rem;
+  position: relative;
+  display: inline-block;
+}
+
+.sectionTitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.5rem;
+  width: 100%;
+  height: 2px;
+  background-color: #3b82f6;
 }
 
 /* Skills section */
@@ -116,16 +171,20 @@
 }
 
 .skillTag {
-  padding: 0.25rem 0.75rem;
-  background-color: var(--tag-bg, #f3f4f6);
-  color: var(--text-secondary, #4b5563);
-  border-radius: 9999px;
+  padding: 0.375rem 0.875rem;
+  background-color: #eff6ff;
+  color: #2563eb;
+  border-radius: 0.375rem;
   font-size: 0.875rem;
+  font-weight: 500;
 }
 
 /* Project, Career, Education, Club sections */
 .item {
   margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
 }
 
 .item:last-child {
@@ -136,13 +195,13 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .itemTitle {
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--text-primary, #111827);
+  color: #111827;
   white-space: pre-line;
   word-break: keep-all;
   word-wrap: break-word;
@@ -151,14 +210,17 @@
 
 .itemPeriod {
   font-size: 0.875rem;
-  color: var(--text-tertiary, #6b7280);
+  color: #2563eb;
+  background-color: #eff6ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
 }
 
 .itemSubtitle {
   font-size: 1rem;
   font-weight: 500;
-  color: var(--text-secondary, #4b5563);
-  margin-bottom: 0.5rem;
+  color: #3b82f6;
+  margin-bottom: 0.75rem;
   white-space: pre-line;
   word-break: keep-all;
   word-wrap: break-word;
@@ -166,8 +228,9 @@
 }
 
 .itemDescription {
-  color: var(--text-secondary, #4b5563);
+  color: #4b5563;
   line-height: 1.75;
+  font-size: 0.9375rem;
   white-space: pre-line;
   word-break: keep-all;
   word-wrap: break-word;
@@ -175,7 +238,12 @@
 }
 
 .itemHonor {
+  margin-top: 0.75rem;
   font-size: 0.875rem;
-  color: var(--accent-color, #2563eb);
+  color: #2563eb;
   font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  background-color: #eff6ff;
+  border-radius: 0.375rem;
+  display: inline-block;
 }

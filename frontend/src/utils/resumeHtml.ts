@@ -1,5 +1,6 @@
 export function generateResumeHtml(
   resumeContent: HTMLElement | null,
+  theme: "type1" | "type2" | "type3" | "type4" | "type5" = "type1",
 ): string | null {
   if (!resumeContent) return null;
 
@@ -17,6 +18,16 @@ export function generateResumeHtml(
     })
     .join("\n");
 
+  // 테마별 배경색 설정
+  const themeBackgroundColors = {
+    type1: "#ffffff",
+    type2: "#ffffff",
+    type3: "#0f172a",
+    type4: "#ffffff",
+    type5: "#ffffff",
+  };
+
+  const themeBackgroundColor = themeBackgroundColors[theme];
   return `
     <!DOCTYPE html>
     <html>
@@ -31,6 +42,17 @@ export function generateResumeHtml(
           body {
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: ${themeBackgroundColor};
+          }
+          html {
+            background-color: ${themeBackgroundColor};
+            min-height: 100vh;
           }
         </style>
       </head>
