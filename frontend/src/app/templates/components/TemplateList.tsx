@@ -26,6 +26,8 @@ export default function TemplateList() {
                 onMouseEnter={() => setHovered(idx)}
                 onMouseLeave={() => setHovered(null)}
                 onClick={() => handleTemplateClick(tpl.templateType)}
+                templateType={tpl.templateType}
+                previewImage={tpl.previewImage}
               />
               <div className="mt-10 w-full text-center">
                 <div className="text-2xl font-bold text-gray-900">

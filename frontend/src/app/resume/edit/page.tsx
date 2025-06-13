@@ -7,6 +7,7 @@ import Button from "@/components/Button/Button";
 import ResumeForm from "./components/ResumeForm";
 import ResumePreview from "./components/ResumePreview/ResumePreview";
 import ResumeTypeSelector from "./components/ResumeTypeSelector";
+import { generateResumeHtml, downloadHtml } from "@/utils/resumeHtml";
 
 import { useResume } from "@/hooks/useResume";
 import { useResumeUpload } from "@/hooks/queries/useResumeUpload";
@@ -36,11 +37,24 @@ export default function EditPage() {
       console.error("PDF 변환 실패:", error);
       alert((error?.message || "") + " 다시 시도해주세요.");
     },
+    theme: template as "type1" | "type2" | "type3" | "type4" | "type5",
   });
 
   const handleDownloadPdf = () => {
     if (resumeRef.current) {
       uploadResume(resumeRef.current);
+    }
+  };
+
+  const handleDownloadHtml = () => {
+    if (resumeRef.current) {
+      const html = generateResumeHtml(
+        resumeRef.current,
+        template as "type1" | "type2" | "type3" | "type4" | "type5",
+      );
+      if (html) {
+        downloadHtml(html, "resume.html");
+      }
     }
   };
 
@@ -63,7 +77,7 @@ export default function EditPage() {
       <div className="flex h-screen min-h-screen bg-gray-200">
         {/* 입력 폼 */}
         <div
-          className="h-screen overflow-y-auto bg-gray-100 box-border"
+          className="h-screen overflow-y-auto bg-gray-100 box-border pb-10"
           style={{
             width: formWidth,
             minWidth: FORM_MIN_WIDTH,
@@ -80,14 +94,23 @@ export default function EditPage() {
           {/* 타입 선택 및 다운로드 버튼 */}
           <div className="sticky w-full top-0 right-0 flex items-center justify-between gap-4 z-10 py-2 px-4 rounded-lg">
             <ResumeTypeSelector templateType={template} />
-            <Button
-              onClick={handleDownloadPdf}
-              disabled={isUploading}
-              variant="primary"
-              className="py-3 px-4"
-            >
-              {isUploading ? "PDF 변환 중..." : "PDF 다운로드"}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleDownloadHtml}
+                variant="neutral"
+                className="py-3 px-4"
+              >
+                HTML 다운로드
+              </Button>
+              <Button
+                onClick={handleDownloadPdf}
+                disabled={isUploading}
+                variant="primary"
+                className="py-3 px-4"
+              >
+                {isUploading ? "PDF 변환 중..." : "PDF 다운로드"}
+              </Button>
+            </div>
           </div>
 
           {/* 프리뷰 */}
@@ -101,7 +124,7 @@ export default function EditPage() {
             >
               <div
                 ref={resumeRef}
-                className="w-[595px] min-h-[842px] bg-white shadow-xl overflow-hidden mb-15"
+                className="w-[595px] min-h-[842px] bg-white overflow-hidden mb-15"
                 style={{ height: "fit-content" }}
               >
                 <ResumePreview resume={resume} theme={template} />
