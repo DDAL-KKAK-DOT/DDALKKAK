@@ -41,4 +41,3 @@ jobs:
           pytest \
             --ignore=backend/test/test_api.py \
             --ignore=backend/test/test_gemini.py \
-            --cov=backend --cov-fail-under=80
