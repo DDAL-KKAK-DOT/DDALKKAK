@@ -37,8 +37,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest pytest-cov  # pytest 및 커버리지 측정 도구 설치
+          pip install pytest pytest-cov
 
       - name: Run pytest with coverage
         run: |
-          pytest tests/ --cov=backend --cov-fail-under=80
+          pytest backend/tests/ --cov=backend --cov-fail-under=80
