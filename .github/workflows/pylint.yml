@@ -25,3 +25,19 @@ jobs:
           pylint backend \
             --disable=missing-module-docstring,missing-function-docstring,import-error,broad-exception-caught \
             --fail-under=8
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install deps
+        run: pip install -r requirements.txt pytest pytest-cov
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          pytest \
+            --ignore=backend/test/test_api.py \
+            --ignore=backend/test/test_gemini.py \

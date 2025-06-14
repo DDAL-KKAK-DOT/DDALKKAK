@@ -1,8 +1,7 @@
-# tests/test_gemini.py
 import json
 from types import SimpleNamespace
 
-from backend import gemini_test
+from backend import gemini_client
 
 
 # ----------------------------------------------------------------------
@@ -47,7 +46,7 @@ def test_build_resume_prompt_invokes_fetch(monkeypatch):
         called.append(url)
         return f"{url} - dummy page text"
 
-    monkeypatch.setattr(gemini_test, "fetch_page_text", _fake_fetch)
+    monkeypatch.setattr(gemini_client, "fetch_page_text", _fake_fetch)
 
     dummy_profile = {
         "name": "홍길동",
@@ -57,7 +56,7 @@ def test_build_resume_prompt_invokes_fetch(monkeypatch):
         "skills": [],
     }
     urls = ["https://a.com", "https://b.com"]
-    prompt = gemini_test.build_resume_prompt(dummy_profile, urls)
+    prompt = gemini_client.build_resume_prompt(dummy_profile, urls)
 
     # fetch가 두 번 호출됐는지
     assert called == urls
@@ -74,14 +73,14 @@ def test_build_resume_prompt_invokes_fetch(monkeypatch):
 def test_generate_profile_from_input(monkeypatch):
     # 2-1) Gemini API 가짜로 대체
     monkeypatch.setattr(
-        gemini_test.genai_client.models,
+        gemini_client.genai_client.models,
         "generate_content",
         _fake_generate_content,
     )
 
     # 2-2) fetch_page_text도 간단히 패치
     monkeypatch.setattr(
-        gemini_test, "fetch_page_text", lambda url: "dummy page text"
+        gemini_client, "fetch_page_text", lambda url: "dummy page text"
     )
 
     # 2-3) OutputProfile을 Pydantic 대신 단순 네임스페이스로 패치
@@ -90,7 +89,7 @@ def test_generate_profile_from_input(monkeypatch):
         def __init__(self, **kw):
             self.__dict__.update(kw)
 
-    monkeypatch.setattr(gemini_test, "OutputProfile", _DummyOut)
+    monkeypatch.setattr(gemini_client, "OutputProfile", _DummyOut)
 
     # 2-4) 최소한의 InputProfile 스텁
     dummy_input = SimpleNamespace(
@@ -100,7 +99,7 @@ def test_generate_profile_from_input(monkeypatch):
         activity_links=["https://a.com"],
     )
 
-    result = gemini_test.generate_profile_from_input(dummy_input)
+    result = gemini_client.generate_profile_from_input(dummy_input)
 
     # 결과 객체가 _DummyOut이며 핵심 필드가 존재하는지 확인
     assert isinstance(result, _DummyOut)

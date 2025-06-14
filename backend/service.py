@@ -1,21 +1,19 @@
-from typing import List
-from fastapi import FastAPI, HTTPException, File, UploadFile
-from fastapi.responses import StreamingResponse, FileResponse
 from pathlib import Path
-import io
-import pdfkit
-from uuid import uuid4
+from typing import List
+
+from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi.responses import FileResponse
+
+from backend.cors import add_cors_middleware
 from backend.data_model.career import Career
 from backend.data_model.club import Club
 from backend.data_model.education import Education
 from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
 from backend.data_model.project import Project
-from backend.gemini_test import generate_profile, generate_profile_from_input
+from backend.gemini_client import generate_profile, generate_profile_from_input
 from backend.sample_data.output_data import profile_data
-from backend.cors import add_cors_middleware
 from backend.utils_convert import convert_html_to_pdf_logic
-
 
 app = FastAPI(
     title="ddalkkak API", description="Portfolio result text API", version="1.0.0"
@@ -25,7 +23,8 @@ app = FastAPI(
 app = add_cors_middleware(app)
 
 PDF_OUTPUT_DIR = Path(__file__).parent / "generated_pdfs"
-PDF_OUTPUT_DIR.mkdir(exist_ok=True)  
+PDF_OUTPUT_DIR.mkdir(exist_ok=True)
+
 
 @app.get("/")
 async def root():
@@ -66,6 +65,7 @@ async def get_education():
 async def get_clubs():
     return profile_data["clubs"]
 
+
 @app.post("/api/profile", response_model=OutputProfile)
 async def generate_profile_endpoint(profile: InputProfile):
     if not profile.activity_links:
@@ -82,6 +82,7 @@ async def convert_html_to_pdf(html_file: UploadFile = File(...)):
         filename=Path(pdf_path).stem + ".pdf"
     )
 
+
 # 에러 헨들링
 @app.get("/api/profile/{section}")
 async def get_profile_section(section: str):
@@ -92,6 +93,7 @@ async def get_profile_section(section: str):
         status_code=404,
         detail=f"섹션 '{section}'을(를) 찾을 수 없습니다. 유효한 섹션: {', '.join(profile_data.keys())}",
     )
+
 
 if __name__ == "__main__":
     import uvicorn

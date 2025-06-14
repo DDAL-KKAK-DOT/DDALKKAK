@@ -3,13 +3,14 @@ import os
 import platform
 import shutil
 import time
+
 import requests
 from bs4 import BeautifulSoup
+from readability import Document
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from readability import Document
 
 UA = {"User-Agent": "Mozilla/5.0"}
 MAX_CHARS = 5000  # 최대 5000자 (≈1500 토큰)
@@ -38,6 +39,7 @@ def _static_fetch(url: str) -> str:
     cleaned_html = doc.summary()
     return BeautifulSoup(cleaned_html, "html.parser").get_text(strip=True)
 
+
 def _select_driver(options: Options) -> Service:
     arch = platform.machine()
     if arch in ("aarch64", "arm64"):
@@ -50,6 +52,7 @@ def _select_driver(options: Options) -> Service:
         if alt:
             return Service(alt)
     return Service(ChromeDriverManager().install())
+
 
 def _dynamic_fetch(url: str) -> str:
     """

@@ -1,9 +1,8 @@
-
-
 from pathlib import Path
-from fastapi import HTTPException, UploadFile
 from uuid import uuid4
+
 import pdfkit
+from fastapi import HTTPException, UploadFile
 
 
 def convert_html_to_pdf_logic(html_file: UploadFile, pdf_output_dir: Path) -> Path:

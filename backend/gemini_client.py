@@ -1,8 +1,10 @@
-import os
 import json
+import os
+
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+
 from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
 from backend.utils_fetch import fetch_page_text
