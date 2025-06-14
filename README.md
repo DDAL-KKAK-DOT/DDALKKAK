@@ -5,22 +5,22 @@
 > [1. 🚀 서비스 배포 링크](#-서비스-배포-링크) <br>
 > [2. 💡 기획 배경](#-기획-배경) <br>
 > [3. 📋 핵심 기능](#-핵심-기능) <br>
-> [4. ⚙️ 서비스 아키텍처](#-서비스-아키텍처) <br>
+> [4. ⚙️ 서비스 아키텍처](#%EF%B8%8F-서비스-아키텍처) <br>
 > [5. 💻 실행 방법](#-실행-방법) <br>
-> [6. 📃 라이선스](#-라이선스) <br>
+> [6. 📚 참고 링크](#-참고-링크) <br>
+> [7. 👥 프로젝트 팀](#-프로젝트-팀) <br>
+> [8. 📃 라이선스](#-라이선스) <br>
 
 <br/>
 
 # 🚀 서비스 배포 링크
 
->https://ddalkkak.vercel.app/
->
-
-📑 API 문서: https://ddalkkak.p-e.kr/docs
+>✨ DDALKKAK: https://ddalkkak.vercel.app/ <br/>
+>📑 API Spec: https://ddalkkak.p-e.kr/docs
 
 <br/>
 
-# 👆🏻 기획 배경
+# 💡 기획 배경
 
 > <strong>'딸깍'</strong>은 이력서를 처음 작성하는 학생들이 겪는 어려움을 해결하고자 시작된 프로젝트입니다.<br/><br/>
 사용자는 <strong>자신의 활동 링크(예: GitHub, Notion 등)</strong>만 입력하면,<br/>AI가 내용을 분석하여 구조화된 이력서 데이터를 생성하고,<br/>
@@ -144,34 +144,35 @@ subgraph Vercel["Vercel (Next.js)"]
 end
 
 %% 백엔드 서버
-subgraph Backend["AWS EC2 (FastAPI)"]
+subgraph Backend["OCI Compute (FastAPI)"]
   API[API 엔드포인트]
-  Gemini[Gemini AI]
-  TextFetch[텍스트 수집]
-  PDF[PDF 생성]
+  Generate[Generate 서비스]
+  PDFService[PDF 서비스]
 end
 
-%% 데이터 처리
-WebSites[웹사이트 크롤링]
+%% 외부 서비스
+TextCrawling[외부 텍스트 수집]
+GeminiAPI[Gemini AI]
 
 %% 플로우
 User --> NextApp
 NextApp -->|HTTP 요청| API
-API --> TextFetch --> WebSites
-API --> Gemini
-API --> PDF
-PDF --> API
-API -->|PDF 파일| NextApp
+API --> Generate
+API --> PDFService
+Generate --> TextCrawling
+Generate --> GeminiAPI
+PDFService --> API
+API -->|응답| NextApp
 NextApp --> User
 
 %% 스타일링
 classDef vercel fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#1976d2
-classDef backend fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#7b1fa2
-classDef process fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#388e3c
+classDef backend fill:#f0f8ff,stroke:#4682b4,stroke-width:2px,color:#4682b4
+classDef external fill:#fff8dc,stroke:#daa520,stroke-width:2px,color:#daa520
 
 class User,NextApp vercel
-class API,Gemini,TextFetch backend
-class PDF,WebSites process
+class API,Generate,PDFService backend
+class TextCrawling,GeminiAPI external
 ```
 
 <br/>
@@ -179,7 +180,7 @@ class PDF,WebSites process
 # 💻 실행 방법
 
 
-## 1️⃣ 사전 요구사항
+### 1️⃣ 사전 요구사항
 
 1. **Python 3.8 이상 설치**
 2. **가상환경 설정 권장**
@@ -192,9 +193,7 @@ class PDF,WebSites process
     ```
 
 
----
-
-## 2️⃣ 설치 방법
+### 2️⃣ 설치 방법
 
 1. GitHub 저장소를 클론
 
@@ -215,9 +214,7 @@ class PDF,WebSites process
     ```
 
 
----
-
-## 3️⃣ 설정
+### 3️⃣ 설정
 
 1. **환경 변수 설정 (선택 사항)**
     - PDF 엔진 경로, 템플릿 디렉토리 경로 등을 `.env` 파일에 정의하세요.
@@ -227,11 +224,9 @@ class PDF,WebSites process
         GEMINI_API_KEY="YOUR_API_KEY"
         ```
 
----
+### 4️⃣ 사용 방법
 
-## 4️⃣ 사용 방법
-
-### 서버 실행 방법 (FastAPI)
+#### 서버 실행 방법 (FastAPI)
 
 1. 서버 실행
 
@@ -251,10 +246,7 @@ class PDF,WebSites process
     http://localhost:8000/redoc
     ```
 
-
----
-
-## 5️⃣ 샘플 입력 및 출력
+### 5️⃣ 샘플 입력 및 출력
 
 - **JSON 예시**
 
@@ -306,6 +298,26 @@ class PDF,WebSites process
   ]
 }
 ```
+
+<br/>
+
+# 📚 참고 링크
+
+| 구분 | 설명 | 링크 |
+|------|------|------|
+| 📖 프로젝트 위키 | 서비스 소개, 컨벤션, 발표 자료, 기술 정리 등| [Ddalkkak Wiki 바로가기](https://github.com/DDAL-KKAK-DOT/DDALKKAK/wiki) |
+| 🤝 Contributing Guide | PR 규칙, 커밋 컨벤션, 브랜치 전략 등 협업 가이드 | [CONTRIBUTING.md](https://github.com/DDAL-KKAK-DOT/DDALKKAK/blob/main/CONTRIBUTING.md) |
+
+
+<br/>
+
+# 👥 프로젝트 팀
+
+| 고민지 | 나상현 | 김예찬 | 조하은 |
+|:------:|:------:|:------:|:------:|
+| <img src="https://github.com/gominzip.png" width="100"/> | <img src="https://github.com/sanghyunna.png" width="100"/> | <img src="https://github.com/ii2001.png" width="100"/> | <img src="https://github.com/haeun030.png" width="100"/> |
+| **FE** | **BE** | **BE** | **BE** |
+| [@gominzip](https://github.com/gominzip) | [@sanghyunna](https://github.com/sanghyunna) | [@ii2001](https://github.com/ii2001) | [@haeun030](https://github.com/haeun030) |
 
 <br/>
 
