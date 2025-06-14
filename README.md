@@ -132,6 +132,59 @@
 
 # ⚙️ 서비스 아키텍처
 
+```mermaid
+flowchart TD
+
+%% 사용자
+User[사용자 브라우저]
+
+%% FastAPI 서버
+subgraph FastAPI
+  App[FastAPI 애플리케이션]
+  Middleware[CORS 미들웨어]
+  Validate[InputProfile 유효성 검사]
+  RoutePost[POST /api/profile]
+  RouteGet[GET /api/resume]
+  Gemini[Gemini API 호출]
+  Prompt[프롬프트 생성 및 텍스트 수집]
+  Verify[OutputProfile 파싱 및 검증]
+end
+
+%% 텍스트 수집 유틸
+subgraph TextFetch
+  Fetch[fetch_page_text]
+  Static[정적 파싱 with readability]
+  Dynamic[동적 파싱 with Selenium]
+end
+
+%% PDF 변환 모듈
+subgraph PDF
+  UploadHTML[HTML 업로드]
+  GeneratePDF[PDF 변환 처리]
+end
+
+%% 데이터 모델
+subgraph DataModel
+  Input[InputProfile]
+  Output[OutputProfile]
+  Units[Career, Project, Club, Education]
+end
+
+%% 전체 흐름
+User -->|입력 제출| RoutePost
+RoutePost --> Middleware --> App
+App --> Validate --> Prompt
+Prompt --> Fetch --> Static
+Fetch --> Dynamic
+Prompt --> Gemini --> Verify --> App
+App -->|OutputProfile 반환| User
+
+User --> UploadHTML --> GeneratePDF --> User
+
+Validate --> Input
+Verify --> Output --> Units
+```
+
 <br>
 
 # 🛠️ 기술 스택
