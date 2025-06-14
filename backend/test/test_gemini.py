@@ -1,4 +1,3 @@
-# tests/test_gemini.py
 import json
 from types import SimpleNamespace
 
