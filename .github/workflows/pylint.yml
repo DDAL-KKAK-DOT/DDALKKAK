@@ -41,4 +41,4 @@ jobs:
 
       - name: Run pytest with coverage
         run: |
-          pytest backend/tests/ --cov=backend --cov-fail-under=80
+          pytest --cov=backend --cov-fail-under=80
