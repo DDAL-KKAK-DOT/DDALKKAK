@@ -200,14 +200,14 @@ class PDF,WebSites process
 
     ```bash
     git clone https://github.com/DDAL-KKAK-DOT/DDALKKAK.git
-    cd resume-auto-generator
     ```
 
 2. 가상환경 활성화 및 의존성 설치
 
     ```bash
     
-    python -m venv .veurce .venv/bin/activate    # macOS/Linux
+    python -m venv .venv
+    source .venv/bin/activate    # macOS/Linux
     .venv\Scripts\activate       # Windows
     
     pip install --upgrade pip
@@ -236,7 +236,7 @@ class PDF,WebSites process
 1. 서버 실행
 
     ```bash
-    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    uvicorn backend.service:app --reload --host 0.0.0.0 --port 8000
     ```
 
 2. 브라우저에서 접속
