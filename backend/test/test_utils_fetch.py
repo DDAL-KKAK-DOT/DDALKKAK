@@ -52,7 +52,7 @@ def test_lru_cache(monkeypatch):
     uf.fetch_page_text.cache_clear()
 
     # 1) 200자 이상 텍스트를 만들어 줌
-    long_text = "S" * (uf.STATIC_THRESHOLD + 10)   # 210자
+    long_text = "S" * (uf.STATIC_THRESHOLD + 10)  # 210자
 
     monkeypatch.setattr(uf, "_static_fetch", lambda _: long_text)
     monkeypatch.setattr(uf, "_dynamic_fetch", lambda _: "should not run")
@@ -65,4 +65,3 @@ def test_lru_cache(monkeypatch):
 
     assert first == second == long_text[:uf.MAX_CHARS]
     assert uf.fetch_page_text.cache_info().hits == 1
-
