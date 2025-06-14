@@ -269,7 +269,7 @@ Verify --> Output --> Units
 
 ## 5️⃣ 샘플 입력 및 출력
 
-- **JSON 예시 (`data/profile.json`)**
+- **JSON 예시**
 
  ```json
 {
