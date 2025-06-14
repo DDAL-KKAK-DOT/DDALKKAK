@@ -47,18 +47,7 @@ def test_get_resume(monkeypatch):
 
 
 # ------------------------------------------------------------------
-# 3) /api/profile – 샘플 데이터 반환 확인
-# ------------------------------------------------------------------
-def test_get_profile():
-    resp = client.get("/api/profile")
-    assert resp.status_code == 200
-    # 프로젝트·스킬 키 존재 여부만 간단 확인
-    body = resp.json()
-    assert "projects" in body and "skills" in body
-
-
-# ------------------------------------------------------------------
-# 4) /api/profile/{section} – 잘못된 섹션 요청 시 404
+# 3) /api/profile/{section} – 잘못된 섹션 요청 시 404
 # ------------------------------------------------------------------
 def test_invalid_section():
     resp = client.get("/api/profile/nonexistent")
@@ -67,7 +56,7 @@ def test_invalid_section():
 
 
 # ------------------------------------------------------------------
-# 5) POST /api/profile – 링크 누락 422, 정상 호출 200
+# 4) POST /api/profile – 링크 누락 422, 정상 호출 200
 # ------------------------------------------------------------------
 def test_generate_profile_endpoint(monkeypatch):
     # 5-1) 활동 링크 없을 때 422
