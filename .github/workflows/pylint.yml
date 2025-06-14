@@ -25,3 +25,20 @@ jobs:
           pylint backend \
             --disable=missing-module-docstring,missing-function-docstring,import-error,broad-exception-caught \
             --fail-under=8
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov  # pytest 및 커버리지 측정 도구 설치
+
+      - name: Run pytest with coverage
+        run: |
+          pytest tests/ --cov=backend --cov-fail-under=80
