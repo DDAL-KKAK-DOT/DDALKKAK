@@ -27,8 +27,6 @@ jobs:
             --fail-under=8
   pytest:
     runs-on: ubuntu-latest
-    env:
-      PYTHON: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,4 +35,6 @@ jobs:
       - name: Install deps
         run: pip install -r requirements.txt pytest pytest-cov
       - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: pytest --cov=backend --cov-fail-under=80
