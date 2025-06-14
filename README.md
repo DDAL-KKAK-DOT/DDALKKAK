@@ -199,7 +199,7 @@ class PDF,WebSites process
 1. GitHub 저장소를 클론
 
     ```bash
-    git clone https://github.com/사용자명/resume-auto-generator.git
+    git clone https://github.com/DDAL-KKAK-DOT/DDALKKAK.git
     cd resume-auto-generator
     ```
 
