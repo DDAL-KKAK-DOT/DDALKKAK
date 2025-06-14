@@ -6,9 +6,7 @@
 > [2. 💡 기획 배경](#-기획-배경) <br>
 > [3. 📋 핵심 기능](#-핵심-기능) <br>
 > [4. ⚙️ 서비스 아키텍처](#-서비스-아키텍쳐) <br>
-> [5. 🛠️ 기술 스택](#-기술-스택) <br>
-> [6. ♻️ 개발 및 기여](#-개발-및-기여) <br>
-> [7. 📃 라이선스](#-라이선스) <br>
+> [5. 📃 라이선스](#-라이선스) <br>
 
 <br/>
 
@@ -185,34 +183,6 @@ Validate --> Input
 Verify --> Output --> Units
 ```
 
-<br>
-
-# 🛠️ 기술 스택
-
-- **언어 및 프레임워크**
-    - Python 3.8 이상
-    - FastAPI (웹 모드)
-- **의존성 관리**
-    - pip + virtualenv
-- **버전 관리**
-    - Git (GitHub 저장소에 호스팅)
-
-<br>
-
-
-# ♻️ 개발 및 기여
-
-- **기여 방법**
-    1. 저장소를 Fork
-    2. 새 브랜치 생성 (`feature/be/{issue_number}`)
-    3. 코드 수정 및 커밋
-    4. Pull Request 생성
-    5. 리뷰 후 병합 (리드 개발자 전원 Approve 시 Merge 가능)
-- **이슈 등록**
-    - 버그 발견, 기능 요청 등은 [Issues](https://github.com/%EC%82%AC%EC%9A%A9%EC%9E%90%EB%AA%85/resume-auto-generator/issues)에 남겨주세요.
-- **코딩 스타일**
-    - PEP8을 준수하여 코드 작성 → pylint 를 준수하도록 Github Actions를 활용
-    - 문서화를 병행
 
 <br/>
 
