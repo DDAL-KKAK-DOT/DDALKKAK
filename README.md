@@ -125,10 +125,11 @@
   </tr>
   <tr align="center">
     <td>
-      <img src="https://github.com/user-attachments/assets/13e69e77-2f37-47e6-b06a-800d69ee5cfc" alt="pdf 다운화면" width="1000"/>
+      <img src="https://github.com/user-attachments/assets/b82d2256-82ff-4a3e-97dd-655d48b3288d" alt="pdf 다운화면"/>
     </td>
   </tr>
 </table>
+
 
 <br>
 
