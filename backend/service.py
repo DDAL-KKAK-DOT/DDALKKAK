@@ -11,7 +11,7 @@ from backend.data_model.education import Education
 from backend.data_model.inputProfile import InputProfile
 from backend.data_model.outputProfile import OutputProfile
 from backend.data_model.project import Project
-from backend.gemini_test import generate_profile, generate_profile_from_input
+from backend.gemini_client import generate_profile, generate_profile_from_input
 from backend.sample_data.output_data import profile_data
 from backend.utils_convert import convert_html_to_pdf_logic
 

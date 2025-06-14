@@ -2,7 +2,7 @@
 import json
 from types import SimpleNamespace
 
-from backend import gemini_test
+from backend import gemini_client
 
 
 # ----------------------------------------------------------------------
