@@ -271,54 +271,55 @@ Verify --> Output --> Units
 
 - **JSON 예시 (`data/profile.json`)**
 
-    ```json
+ ```json
+{
+  "profileInfo": {
+    "name": "김오스스",
+    "english_name": "OSS Kim",
+    "educations": ["중앙대학교"],
+    "desired_role": "백엔드 개발자",
+    "contact": "OSS.kim@example.com",
+    "activity_links": ["https://github.com/OSS"]
+  },
+  "shortIntro": "REST API에 익숙한 백엔드 개발자입니다.",
+  "skills": [
+    "Python (상) - 웹 서비스 개발 및 데이터 처리 경험 보유",
+    "FastAPI (중) - 경량 API 서버 구현 경험 있음"
+  ],
+  "projects": [
     {
-      "personal_info": {
-        "name": "김예찬",
-        "email": "yechan.kim@example.com",
-        "phone": "+82-10-1234-5678",
-        "address": "서울시 관악구"
-      },
-      "education": [
-        {
-          "institution": "중앙대학교",
-          "degree": "학사",
-          "major": "소프트웨어학부",
-          "start_date": "2019-03",
-          "end_date": "2023-02"
-        },
-        {
-          "institution": "Ohio State University",
-          "degree": "학사",
-          "major": "Landscape Architecture",
-          "start_date": "2018-08",
-          "end_date": "2022-05"
-        }
-      ],
-      "experience": [
-        {
-          "company": "ABC Tech",
-          "position": "소프트웨어 엔지니어 인턴",
-          "start_date": "2024-07",
-          "end_date": "2024-08",
-          "details": [
-            "FastAPI 기반 RESTful API 개발",
-            "Docker를 활용한 컨테이너 배포",
-            "CI/CD 파이프라인 설정 및 관리"
-          ]
-        }
-      ],
-      "skills": ["Python", "FastAPI", "Docker", "Git", "HTML/CSS"],
-      "projects": [
-        {
-          "title": "Resume Auto-Generator",
-          "description": "구조화된 데이터를 기반으로 이력서를 자동 생성하는 툴 개발",
-          "technologies": ["FastAPI", "Jinja2"]
-        }
-      ]
+      "name": "Resume Generator",
+      "period": "2024.03 - 2024.05",
+      "role": "백엔드 개발",
+      "description": "자동 이력서 생성기 개발",
+      "honor": "반자동화로 작성 시간 70% 단축"
     }
-    
-    ```
+  ],
+  "career": [
+    {
+      "role": "인턴",
+      "company": "ABC Tech",
+      "period": "2024.07 - 2024.08",
+      "description": "FastAPI 기반 서버 구축 경험"
+    }
+  ],
+  "education": [
+    {
+      "name": "중앙대학교",
+      "period": "2019.03 - 2023.02",
+      "description": "소프트웨어학부 전공"
+    }
+  ],
+  "clubs": [
+    {
+      "name": "알고리즘 학회",
+      "period": "2020.03 - 2021.12",
+      "description": "PS 스터디 운영"
+    }
+  ]
+}
+```
+
 <br/>
 
 # 📃 라이선스
