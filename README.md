@@ -324,6 +324,6 @@ Verify --> Output --> Units
 
 # 📃 라이선스
 
-이 프로젝트는 [MIT 라이선스](https://www.notion.so/nasanghyun/LICENSE)를 따릅니다. 자유롭게 사용, 수정, 배포가 가능합니다.
+이 프로젝트는 [MIT 라이선스](https://github.com/DDAL-KKAK-DOT/DDALKKAK?tab=MIT-1-ov-file)를 따릅니다. 자유롭게 사용, 수정, 배포가 가능합니다.
 
 <br/>
