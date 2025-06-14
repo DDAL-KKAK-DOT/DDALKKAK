@@ -137,55 +137,41 @@
 
 ```mermaid
 flowchart TD
-
-%% 사용자
-User[사용자 브라우저]
-
-%% FastAPI 서버
-subgraph FastAPI
-  App[FastAPI 애플리케이션]
-  Middleware[CORS 미들웨어]
-  Validate[InputProfile 유효성 검사]
-  RoutePost[POST /api/profile]
-  RouteGet[GET /api/resume]
-  Gemini[Gemini API 호출]
-  Prompt[프롬프트 생성 및 텍스트 수집]
-  Verify[OutputProfile 파싱 및 검증]
+%% 클라이언트
+subgraph Vercel["Vercel (Next.js)"]
+  User[사용자]
+  NextApp[Next.js 앱]
 end
 
-%% 텍스트 수집 유틸
-subgraph TextFetch
-  Fetch[fetch_page_text]
-  Static[정적 파싱 with readability]
-  Dynamic[동적 파싱 with Selenium]
+%% 백엔드 서버
+subgraph Backend["AWS EC2 (FastAPI)"]
+  API[API 엔드포인트]
+  Gemini[Gemini AI]
+  TextFetch[텍스트 수집]
+  PDF[PDF 생성]
 end
 
-%% PDF 변환 모듈
-subgraph PDF
-  UploadHTML[HTML 업로드]
-  GeneratePDF[PDF 변환 처리]
-end
+%% 데이터 처리
+WebSites[웹사이트 크롤링]
 
-%% 데이터 모델
-subgraph DataModel
-  Input[InputProfile]
-  Output[OutputProfile]
-  Units[Career, Project, Club, Education]
-end
+%% 플로우
+User --> NextApp
+NextApp -->|HTTP 요청| API
+API --> TextFetch --> WebSites
+API --> Gemini
+API --> PDF
+PDF --> API
+API -->|PDF 파일| NextApp
+NextApp --> User
 
-%% 전체 흐름
-User -->|입력 제출| RoutePost
-RoutePost --> Middleware --> App
-App --> Validate --> Prompt
-Prompt --> Fetch --> Static
-Fetch --> Dynamic
-Prompt --> Gemini --> Verify --> App
-App -->|OutputProfile 반환| User
+%% 스타일링
+classDef vercel fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#1976d2
+classDef backend fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#7b1fa2
+classDef process fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#388e3c
 
-User --> UploadHTML --> GeneratePDF --> User
-
-Validate --> Input
-Verify --> Output --> Units
+class User,NextApp vercel
+class API,Gemini,TextFetch backend
+class PDF,WebSites process
 ```
 
 <br/>
