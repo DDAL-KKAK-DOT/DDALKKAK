@@ -5,8 +5,9 @@
 > [1. 🚀 서비스 배포 링크](#-서비스-배포-링크) <br>
 > [2. 💡 기획 배경](#-기획-배경) <br>
 > [3. 📋 핵심 기능](#-핵심-기능) <br>
-> [4. ⚙️ 서비스 아키텍처](#-서비스-아키텍쳐) <br>
-> [5. 📃 라이선스](#-라이선스) <br>
+> [4. ⚙️ 서비스 아키텍처](#-서비스-아키텍처) <br>
+> [5. 💻 실행 방법](#-실행-방법) <br>
+> [6. 📃 라이선스](#-라이선스) <br>
 
 <br/>
 
@@ -183,7 +184,138 @@ Validate --> Input
 Verify --> Output --> Units
 ```
 
+<br/>
 
+# 💻 실행 방법
+
+
+## 1️⃣ 사전 요구사항
+
+1. **Python 3.8 이상 설치**
+2. **가상환경 설정 권장**
+
+    ```bash
+    python -m venv .venv
+    source .venv/bin/activate    # macOS/Linux
+    .venv\\Scripts\\activate       # Windows
+    
+    ```
+
+
+---
+
+## 2️⃣ 설치 방법
+
+1. GitHub 저장소를 클론
+
+    ```bash
+    git clone https://github.com/사용자명/resume-auto-generator.git
+    cd resume-auto-generator
+    ```
+
+2. 가상환경 활성화 및 의존성 설치
+
+    ```bash
+    
+    python -m venv .veurce .venv/bin/activate    # macOS/Linux
+    .venv\Scripts\activate       # Windows
+    
+    pip install --upgrade pip
+    pip install -r requirements.txt
+    ```
+
+
+---
+
+## 3️⃣ 설정
+
+1. **환경 변수 설정 (선택 사항)**
+    - PDF 엔진 경로, 템플릿 디렉토리 경로 등을 `.env` 파일에 정의하세요.
+    - 예시 (`.env`):
+
+        ```
+        GEMINI_API_KEY="YOUR_API_KEY"
+        ```
+
+---
+
+## 4️⃣ 사용 방법
+
+### 서버 실행 방법 (FastAPI)
+
+1. 서버 실행
+
+    ```bash
+    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    ```
+
+2. 브라우저에서 접속
+
+    ```bash
+    http://localhost:8000/docs
+    ```
+
+   또는
+
+    ```
+    http://localhost:8000/redoc
+    ```
+
+
+---
+
+## 5️⃣ 샘플 입력 및 출력
+
+- **JSON 예시 (`data/profile.json`)**
+
+    ```json
+    {
+      "personal_info": {
+        "name": "김예찬",
+        "email": "yechan.kim@example.com",
+        "phone": "+82-10-1234-5678",
+        "address": "서울시 관악구"
+      },
+      "education": [
+        {
+          "institution": "중앙대학교",
+          "degree": "학사",
+          "major": "소프트웨어학부",
+          "start_date": "2019-03",
+          "end_date": "2023-02"
+        },
+        {
+          "institution": "Ohio State University",
+          "degree": "학사",
+          "major": "Landscape Architecture",
+          "start_date": "2018-08",
+          "end_date": "2022-05"
+        }
+      ],
+      "experience": [
+        {
+          "company": "ABC Tech",
+          "position": "소프트웨어 엔지니어 인턴",
+          "start_date": "2024-07",
+          "end_date": "2024-08",
+          "details": [
+            "FastAPI 기반 RESTful API 개발",
+            "Docker를 활용한 컨테이너 배포",
+            "CI/CD 파이프라인 설정 및 관리"
+          ]
+        }
+      ],
+      "skills": ["Python", "FastAPI", "Docker", "Git", "HTML/CSS"],
+      "projects": [
+        {
+          "title": "Resume Auto-Generator",
+          "description": "구조화된 데이터를 기반으로 이력서를 자동 생성하는 툴 개발",
+          "technologies": ["FastAPI", "Jinja2"]
+        }
+      ]
+    }
+    
+    ```
 <br/>
 
 # 📃 라이선스
