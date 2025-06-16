@@ -305,9 +305,9 @@ class TextCrawling,GeminiAPI external
 
 | 구분 | 설명 | 링크 |
 |------|------|------|
-| 📖 프로젝트 위키 | 서비스 소개, 컨벤션, 발표 자료, 기술 정리 등| [Ddalkkak Wiki 바로가기](https://github.com/DDAL-KKAK-DOT/DDALKKAK/wiki) |
+| 📖 프로젝트 위키 | 서비스 소개, 컨벤션, 발표 자료, 기술 정리 등| [DDALKKAK WIKI](https://github.com/DDAL-KKAK-DOT/DDALKKAK/wiki) |
 | 🤝 기여 가이드 | PR 규칙, 커밋 컨벤션, 브랜치 전략 등 협업 가이드 | [CONTRIBUTING.md](https://github.com/DDAL-KKAK-DOT/DDALKKAK/blob/main/CONTRIBUTING.md) |
-| 🧑‍🤝‍🧑 행동 강 | 존중과 협업을 위한 커뮤니티 행동 규칙 | [CODE_OF_CONDUCT.md](https://github.com/DDAL-KKAK-DOT/DDALKKAK/blob/main/CODE_OF_CONDUCT.md) |
+| 🧑‍🤝‍🧑 행동 강령 | 존중과 협업을 위한 커뮤니티 행동 규칙 | [CODE_OF_CONDUCT.md](https://github.com/DDAL-KKAK-DOT/DDALKKAK/blob/main/CODE_OF_CONDUCT.md) |
 
 
 <br/>
