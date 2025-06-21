@@ -210,6 +210,64 @@ JSON 포맷으로 **매우 상세한** 이력서를 만들어 주세요.
   ]
 }}
 
+{
+    "profileInfo": {
+    "name": "김철수",
+    "english_name": "KIM CHUL SOO",
+    "educations": ["서울대학교 정보보호학과"],
+    "desired_role": "시스템 소프트웨어 엔지니어",
+    "contact": "chulsoo@example.com",
+    "activity_links": [
+      "https://github.com/chulsoo/sysproj",
+      "https://github.com/chulsoo/netproj"
+    ]
+  },
+  "shortIntro": "안정성과 효율성을 중시하는 시스템 개발자입니다.",
+  "skills": [
+    "C++ 상급: 커널 모듈 및 드라이버 개발 경험",
+    "Go 중급: 고성능 네트워크 서버 설계",
+    "Docker 중급: 컨테이너 오케스트레이션 자동화"
+  ],
+  "projects": [
+    {
+    "name": "커널 모듈 개발 프로젝트",
+      "period": "2021.02 - 2021.08",
+      "role": "시스템 개발자",
+      "description": "Linux 커널 모듈을 구현하여 디바이스 드라이버 기능을 확장했습니다.",
+      "honor": "모듈 로드 시간 25% 감소"
+    },
+    {
+    "name": "네트워크 서버 구현",
+      "period": "2020.03 - 2020.11",
+      "role": "백엔드 개발자",
+      "description": "Go 언어로 TCP/UDP 서버를 설계하고 부하 분산 시스템을 구축했습니다.",
+      "honor": "서버 처리량 2배 증가"
+    }
+  ],
+  "careers": [
+    {
+    "role": "시스템 엔지니어",
+      "company": "XYZ 솔루션",
+      "period": "2018.04 - 2020.01",
+      "description": "임베디드 시스템 및 리얼타임 OS 개발"
+    }
+  ],
+  "educations": [
+    {
+    "name": "정보보호 전문가 과정",
+      "period": "2019.05 - 2019.10",
+      "description": "침투 테스트 및 보안 아키텍처 학습"
+    }
+  ],
+  "clubs": [
+    {
+    "name": "해킹 방어대회 팀",
+      "period": "2017.09 - 2018.02",
+      "description": "CTF 대회 참가 및 메달 획득"
+    }
+  ]
+}
+
 3) 지시 사항:
 - **반드시** 위 스키마와 동일한 JSON 키와 중첩 구조를 사용하세요.  
 - 값은 샘플 데이터를 참고해 사실에 근거하거나, 입력된 정보에서 추론한 내용으로 채웁니다.  
