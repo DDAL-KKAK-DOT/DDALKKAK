@@ -56,12 +56,15 @@ def build_resume_prompt(profile: dict, urls: list[str]) -> str:
     sections = []
     print(urls)
     for idx, url in enumerate(urls, start=1):
+
         # fetch_page_text로 가져온 내용의 중괄호를 f-string을 위해 이스케이프 처리합니다.
         content = fetch_page_text(url).replace('{', '{{').replace('}', '}}')
+
         print(idx, content)
         sections.append(f"[{idx}] URL: {url}\nCONTENT:\n{content}\n")
     links_block = "\n".join(sections)
     # (아래 프롬프트 구성은 종전 그대로)
+
 
     # JSON 스키마와 샘플 데이터의 중괄호를 이스케이프 처리
     json_schema = '''{{
@@ -272,7 +275,6 @@ def build_resume_prompt(profile: dict, urls: list[str]) -> str:
 
       -- 이제 바로 JSON만 출력해 주세요.
       '''
-
 
 
 def generate_profile() -> OutputProfile:

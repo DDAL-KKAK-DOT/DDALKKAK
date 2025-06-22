@@ -24,5 +24,4 @@ def convert_html_to_pdf_logic(html_file: UploadFile, pdf_output_dir: Path) -> Pa
     }
     
     pdfkit.from_string(html_raw, str(pdf_path), options=options)
-
     return pdf_path
