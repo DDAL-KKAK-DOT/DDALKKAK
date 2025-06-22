@@ -274,6 +274,7 @@ def build_resume_prompt(profile: dict, urls: list[str]) -> str:
       '''
 
 
+
 def generate_profile() -> OutputProfile:
     profile = {
         "name": "김예찬",
