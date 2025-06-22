@@ -1,0 +1,32 @@
+name: Deploy frontend to Vercel via separate repo
+
+on:
+  push:
+    branches: [release-fe] # ✅ release-fe 브랜치에서만 작동
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: pandoc/latex # mustache 설치용 도커 이미지
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+
+      - name: Install mustache (for build tools)
+        run: apk add ruby && gem install mustache
+
+      - name: Create output directory from frontend
+        run: sh ./build.sh
+
+      - name: Push to deploy repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.FE_AUTO_ACTIONS }}
+        with:
+          source-directory: "output"
+          destination-github-username: gominzip
+          destination-repository-name: DDALKKAK
+          user-email: ${{ secrets.FE_EMAIL }}
+          commit-message: ${{ github.event.commits[0].message }}
+          target-branch: main
