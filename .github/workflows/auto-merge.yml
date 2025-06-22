@@ -1,45 +1,15 @@
-name: Auto Enable Auto-merge
+name: Auto-merge PRs to dev-be
+
 on:
   pull_request:
-    types: [opened, synchronize]
-
-permissions:
-  pull-requests: write
+    types: [opened, synchronize, reopened]
 
 jobs:
-  enable-auto-merge:
-    if: github.event.pull_request.base.ref == 'dev-be'
+  automerge:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.base.ref == 'dev-be'
     steps:
-      - name: Enable auto-merge
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const result = await github.graphql(`
-              mutation EnableAutoMerge($pullRequestId: ID!) {
-                enablePullRequestAutoMerge(input: {
-                  pullRequestId: $pullRequestId,
-                  mergeMethod: SQUASH
-                }) {
-                  pullRequest {
-                    number
-                  }
-                }
-              }
-            `, {
-              pullRequestId: (await github.graphql(`
-                query ($owner: String!, $repo: String!, $number: Int!) {
-                  repository(owner: $owner, name: $repo) {
-                    pullRequest(number: $number) {
-                      id
-                    }
-                  }
-                }
-              `, {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                number: context.payload.pull_request.number
-              })).repository.pullRequest.id
-            });
-
-            console.log("Auto-merge enabled for PR");
+      - uses: pascalgn/automerge-action@v0.16.3
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_METHOD: "squash"
