@@ -1,22 +1,25 @@
-name: Auto Merge (3+ approvals, dev-be only)
-
+name: Auto Enable Auto-merge
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
-  automerge:
-    if: github.event.review.state == 'approved'
+  enable-auto-merge:
     runs-on: ubuntu-latest
-
+    if: github.event.pull_request.base.ref == 'dev-be'
     steps:
-      - name: Auto merge PR when 3+ approvals for dev-be
-        uses: pascalgn/automerge-action@v0.16.3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_METHOD: squash
-          APPROVALS: 3
-          TARGET_BRANCH: dev-be
-          MERGE_FORKS: false
-          MERGE_DELETE_BRANCH: true
-          MERGE_COMMIT_MESSAGE: pull-request-title
+      - name: Enable auto-merge
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.pulls.enableAutoMerge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.event.pull_request.number,
+                merge_method: 'merge'
+              });
+              console.log('Auto-merge enabled successfully');
+            } catch (error) {
+              console.log('Failed to enable auto-merge:', error.message);
+            }
