@@ -15,5 +15,14 @@ def convert_html_to_pdf_logic(html_file: UploadFile, pdf_output_dir: Path) -> Pa
     pdf_name = f"{stem}_{uuid4().hex}.pdf"
     pdf_path = pdf_output_dir / pdf_name
 
-    pdfkit.from_string(html_raw, str(pdf_path))
+    options = {
+        'disable-smart-shrinking': '',
+        'margin-top': '0',
+        'margin-bottom': '0',
+        'margin-left': '0',
+        'margin-right': '0'
+    }
+    
+    pdfkit.from_string(html_raw, str(pdf_path), options=options)
+
     return pdf_path
