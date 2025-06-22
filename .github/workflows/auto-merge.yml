@@ -17,7 +17,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: context.event.pull_request.number,
-                merge_method: 'merge'
+                merge_method: 'squash'
               });
               console.log('Auto-merge enabled successfully');
             } catch (error) {
