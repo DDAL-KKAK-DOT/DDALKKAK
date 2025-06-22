@@ -3,23 +3,43 @@ on:
   pull_request:
     types: [opened, synchronize]
 
+permissions:
+  pull-requests: write
+
 jobs:
   enable-auto-merge:
-    runs-on: ubuntu-latest
     if: github.event.pull_request.base.ref == 'dev-be'
+    runs-on: ubuntu-latest
     steps:
       - name: Enable auto-merge
         uses: actions/github-script@v7
         with:
           script: |
-            try {
-              await github.rest.pulls.enableAutoMerge({
+            const result = await github.graphql(`
+              mutation EnableAutoMerge($pullRequestId: ID!) {
+                enablePullRequestAutoMerge(input: {
+                  pullRequestId: $pullRequestId,
+                  mergeMethod: SQUASH
+                }) {
+                  pullRequest {
+                    number
+                  }
+                }
+              }
+            `, {
+              pullRequestId: (await github.graphql(`
+                query ($owner: String!, $repo: String!, $number: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    pullRequest(number: $number) {
+                      id
+                    }
+                  }
+                }
+              `, {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: context.payload.pull_request.number,
-                merge_method: 'squash'
-              });
-              console.log('Auto-merge enabled successfully');
-            } catch (error) {
-              console.log('Failed to enable auto-merge:', error.message);
-            }
+                number: context.payload.pull_request.number
+              })).repository.pullRequest.id
+            });
+
+            console.log("Auto-merge enabled for PR");
